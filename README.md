@@ -4,6 +4,9 @@ A modern, secure, and high-performance templating engine for Node.js with TypeSc
 
 [![npm version](https://img.shields.io/npm/v/v3-templater.svg)](https://www.npmjs.com/package/v3-templater)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![RSR Compliance](https://img.shields.io/badge/RSR-SILVER-silver.svg)](https://github.com/Hyperpolymath/v3-templater/blob/main/scripts/verify-rsr.sh)
+[![TPCF Perimeter](https://img.shields.io/badge/TPCF-Perimeter%203-green.svg)](https://github.com/Hyperpolymath/v3-templater/blob/main/MAINTAINERS.md)
+[![Security](https://img.shields.io/badge/security.txt-RFC%209116-blue.svg)](https://github.com/Hyperpolymath/v3-templater/blob/main/.well-known/security.txt)
 
 ## Features
 
@@ -12,9 +15,11 @@ A modern, secure, and high-performance templating engine for Node.js with TypeSc
 - 💪 **TypeScript** - Full TypeScript support with type definitions
 - 🎨 **Rich Syntax** - Variables, conditionals, loops, filters, inheritance, and more
 - 🔧 **Extensible** - Custom filters, helpers, and plugin system
-- 📦 **Zero Dependencies** - Lightweight with minimal footprint
+- 📦 **Minimal Dependencies** - Only 1 production dependency
 - 🛠️ **CLI Tool** - Command-line interface for quick rendering
 - ✅ **Well Tested** - Comprehensive test coverage (80%+)
+- 🏆 **RSR Compliant** - Silver level Rhodium Standard Repository compliance
+- 🌍 **Community Driven** - TPCF Perimeter 3 (fully open contribution)
 
 ## Installation
 
@@ -370,9 +375,56 @@ Typical performance (on modern hardware):
 
 Contributions are welcome! Please read our contributing guidelines and submit pull requests.
 
+## RSR Compliance
+
+v3-templater achieves **SILVER level** compliance with the [Rhodium Standard Repository (RSR) Framework](https://github.com/Hyperpolymath/rhodium-standard-repository):
+
+### Compliance Checklist
+
+✅ **Type Safety**: TypeScript strict mode
+✅ **Memory Safety**: Garbage collected (JavaScript/TypeScript)
+✅ **Offline-first**: No network calls, works air-gapped
+✅ **Documentation**: README, API docs, migration guides, contributing guide
+✅ **License**: MIT + Palimpsest v0.8 dual licensing
+✅ **Security**: SECURITY.md, RFC 9116 security.txt
+✅ **Code of Conduct**: Contributor Covenant 2.1
+✅ **Maintainers**: TPCF Perimeter 3 (Community Sandbox)
+✅ **.well-known/**: security.txt, ai.txt, humans.txt
+✅ **Build System**: npm scripts + justfile + flake.nix
+✅ **CI/CD**: GitHub Actions configured
+✅ **Tests**: 5 test suites, 80%+ coverage target
+
+### Verify Compliance
+
+```bash
+# Using just (recommended)
+just rsr-check
+
+# Using script directly
+./scripts/verify-rsr.sh
+
+# Using Nix
+nix flake check
+```
+
+### TPCF Perimeter 3
+
+This project operates at **Perimeter 3 (Community Sandbox)**:
+- ✅ Fully open contribution via pull requests
+- ✅ Public issue tracking and roadmap
+- ✅ Transparent decision-making
+- ✅ Merit-based advancement to maintainer
+
+See [MAINTAINERS.md](MAINTAINERS.md) for details.
+
 ## License
 
-MIT License - see LICENSE file for details
+Dual licensed under:
+
+1. **MIT License** - see [LICENSE](LICENSE) file
+2. **Palimpsest License v0.8** - see [LICENSE-PALIMPSEST.txt](LICENSE-PALIMPSEST.txt)
+
+You may choose either license for your use.
 
 ## Roadmap
 

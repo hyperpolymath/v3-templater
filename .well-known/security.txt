@@ -1,0 +1,25 @@
+# security.txt - RFC 9116 Compliant Security Contact Information
+# https://securitytxt.org/
+
+Contact: mailto:security@hyperpolymath.dev
+Contact: https://github.com/Hyperpolymath/v3-templater/security/advisories/new
+Expires: 2025-12-31T23:59:59.000Z
+Preferred-Languages: en
+Canonical: https://hyperpolymath.dev/.well-known/security.txt
+
+# Encryption
+# PGP key available at: https://hyperpolymath.dev/pgp-key.asc
+# Fingerprint: (to be added)
+
+# Policy
+Policy: https://github.com/Hyperpolymath/v3-templater/blob/main/SECURITY.md
+
+# Acknowledgments
+Acknowledgments: https://github.com/Hyperpolymath/v3-templater/blob/main/SECURITY.md#security-audit-history
+
+# Hiring
+# We are not currently hiring security researchers
+
+# Please report security vulnerabilities responsibly
+# Do NOT report security issues via public GitHub issues
+# Expected response time: 48 hours
