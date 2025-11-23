@@ -1,0 +1,67 @@
+# Docker Compose for v3-templater development
+# RSR PLATINUM: Development environment automation
+
+version: '3.9'
+
+services:
+  # v3-templater CLI tool
+  v3t:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NODE_ENV: production
+    image: v3-templater:latest
+    container_name: v3t
+    volumes:
+      # Mount templates directory
+      - ./examples:/templates:ro
+      # Mount output directory
+      - ./output:/output
+    environment:
+      - NODE_ENV=production
+    command: --help
+
+  # Development environment
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      target: development
+    image: v3-templater:dev
+    container_name: v3t-dev
+    volumes:
+      # Mount source code for development
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "9229:9229"  # Node.js debugging
+    command: npm run watch
+
+  # Testing environment
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: v3-templater:test
+    container_name: v3t-test
+    environment:
+      - NODE_ENV=test
+      - CI=true
+    command: npm test
+
+  # Documentation server (for future docs site)
+  docs:
+    image: nginx:alpine
+    container_name: v3t-docs
+    ports:
+      - "8080:80"
+    volumes:
+      - ./docs:/usr/share/nginx/html:ro
+      - ./examples:/usr/share/nginx/html/examples:ro
+
+networks:
+  default:
+    name: v3t-network
