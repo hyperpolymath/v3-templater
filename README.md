@@ -1,47 +1,89 @@
 # v3-templater
 
-A modern, secure, and high-performance templating engine for Node.js with TypeScript support.
+A modern, secure, and high-performance templating engine built with ReScript and Deno. Zero TypeScript, zero Node.js.
 
-[![npm version](https://img.shields.io/npm/v/v3-templater.svg)](https://www.npmjs.com/package/v3-templater)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![ReScript](https://img.shields.io/badge/lang-ReScript-e6484f.svg)](https://rescript-lang.org/)
+[![Deno](https://img.shields.io/badge/runtime-Deno-black.svg?logo=deno)](https://deno.land/)
 [![RSR Compliance](https://img.shields.io/badge/RSR-PLATINUM-blueviolet.svg)](https://github.com/Hyperpolymath/v3-templater/blob/main/RSR-PLATINUM.md)
 [![TPCF Perimeter](https://img.shields.io/badge/TPCF-Perimeter%203-green.svg)](https://github.com/Hyperpolymath/v3-templater/blob/main/MAINTAINERS.md)
 [![Security](https://img.shields.io/badge/security.txt-RFC%209116-blue.svg)](https://github.com/Hyperpolymath/v3-templater/blob/main/.well-known/security.txt)
 [![CI/CD](https://img.shields.io/badge/CI-GitHub%20%2B%20GitLab-orange.svg)](https://github.com/Hyperpolymath/v3-templater/blob/main/.github/workflows/ci.yml)
-[![Container](https://img.shields.io/badge/docker-supported-2496ED.svg)](https://github.com/Hyperpolymath/v3-templater/blob/main/Dockerfile)
-[![SBOM](https://img.shields.io/badge/SBOM-CycloneDX-00ADD8.svg)](https://github.com/Hyperpolymath/v3-templater/blob/main/.github/workflows/ci.yml)
 
 ## Features
 
 - 🚀 **High Performance** - Fast compilation and rendering with built-in caching
 - 🔒 **Security First** - XSS protection with automatic HTML escaping
-- 💪 **TypeScript** - Full TypeScript support with type definitions
+- 🦀 **ReScript** - Sound type system, no null errors, exhaustive pattern matching
+- 🦕 **Deno** - Modern runtime with built-in tooling, no node_modules
 - 🎨 **Rich Syntax** - Variables, conditionals, loops, filters, inheritance, and more
 - 🔧 **Extensible** - Custom filters, helpers, and plugin system
-- 📦 **Minimal Dependencies** - Only 1 production dependency
-- 🛠️ **CLI Tool** - Command-line interface for quick rendering
-- ✅ **Well Tested** - Comprehensive test coverage (80%+)
+- 📦 **Zero Dependencies** - No production dependencies (only he for HTML via CDN)
+- 🛠️ **Built-in Tools** - No jest, eslint, prettier needed - Deno includes them all
+- ✅ **Well Tested** - Comprehensive test coverage with Deno test
 - 🏆 **RSR Compliant** - PLATINUM level Rhodium Standard Repository compliance
 - 🌍 **Community Driven** - TPCF Perimeter 3 (fully open contribution)
 - 🤖 **Multi-CI** - GitHub Actions + GitLab CI pipelines
 - 🐳 **Container Ready** - Docker and docker-compose support
-- 📋 **SBOM** - Software Bill of Materials with CycloneDX
 - 📝 **ADRs** - Architecture Decision Records documented
+- ⚡ **WASM Ready** - Easy path to WebAssembly for performance
+
+## Prerequisites
+
+- [Deno](https://deno.land/) 1.38 or later
+- [ReScript](https://rescript-lang.org/) 11.0 or later (for development)
 
 ## Installation
 
+### For Deno Projects
+
+```typescript
+import { Template } from 'https://deno.land/x/v3_templater/mod.ts';
+
+const template = new Template();
+const result = template.render('Hello {{ name }}!', { name: 'World' });
+console.log(result); // "Hello World!"
+```
+
+### For Development
+
 ```bash
-npm install v3-templater
+# Clone the repository
+git clone https://github.com/Hyperpolymath/v3-templater.git
+cd v3-templater
+
+# Install ReScript compiler
+npm install
+
+# Build ReScript to JavaScript
+npm run build
+
+# Run tests with Deno
+deno task test
 ```
 
 ## Quick Start
 
 ```javascript
-const { Template } = require('v3-templater');
+// Import from Deno module
+import { Template } from 'https://deno.land/x/v3_templater/mod.ts';
 
-const template = new Template();
+// Create template engine
+const template = new Template({
+  autoEscape: true,  // XSS protection by default
+  cache: true,       // LRU caching enabled
+  strictMode: false, // Fail on undefined variables
+});
+
+// Render from string
 const result = template.render('Hello {{ name }}!', { name: 'World' });
 console.log(result); // "Hello World!"
+
+// Render from file (async)
+const html = await template.renderFile('./templates/page.html', {
+  title: 'My Page',
+  items: ['foo', 'bar', 'baz']
+});
 ```
 
 ## Template Syntax
