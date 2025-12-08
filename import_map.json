@@ -1,0 +1,9 @@
+{
+  "imports": {
+    "@std/assert": "https://deno.land/std@0.210.0/assert/mod.ts",
+    "@std/testing": "https://deno.land/std@0.210.0/testing/mod.ts",
+    "@std/path": "https://deno.land/std@0.210.0/path/mod.ts",
+    "@std/fs": "https://deno.land/std@0.210.0/fs/mod.ts",
+    "he": "https://esm.sh/he@1.2.0"
+  }
+}

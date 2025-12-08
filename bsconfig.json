@@ -1,0 +1,31 @@
+{
+  "name": "v3-templater",
+  "version": "1.0.0",
+  "sources": [
+    {
+      "dir": "src",
+      "subdirs": true
+    }
+  ],
+  "package-specs": [
+    {
+      "module": "es6",
+      "in-source": true
+    }
+  ],
+  "suffix": ".bs.js",
+  "bs-dependencies": [],
+  "warnings": {
+    "error": "+101"
+  },
+  "namespace": true,
+  "refmt": 3,
+  "gentypeconfig": {
+    "language": "untyped"
+  },
+  "ppx-flags": [],
+  "bsc-flags": ["-bs-no-version-header", "-bs-super-errors"],
+  "reason": {
+    "react-jsx": 3
+  }
+}

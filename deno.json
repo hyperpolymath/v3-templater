@@ -1,0 +1,42 @@
+{
+  "version": "1.0.0",
+  "name": "@hyperpolymath/v3-templater",
+  "exports": "./src/index.bs.js",
+  "tasks": {
+    "build": "rescript build",
+    "build:watch": "rescript build -w",
+    "clean": "rescript clean",
+    "test": "deno test --allow-read --allow-write tests/",
+    "test:watch": "deno test --allow-read --allow-write --watch tests/",
+    "bench": "deno run --allow-read src/benchmark.bs.js",
+    "cli": "deno run --allow-read --allow-write src/cli.bs.js",
+    "lint": "deno lint src/",
+    "fmt": "deno fmt src/ tests/",
+    "fmt:check": "deno fmt --check src/ tests/",
+    "coverage": "deno test --allow-read --allow-write --coverage=coverage/ tests/ && deno coverage coverage/",
+    "check": "deno check src/index.bs.js"
+  },
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false,
+    "lib": ["deno.window", "deno.ns", "esnext"]
+  },
+  "fmt": {
+    "useTabs": false,
+    "lineWidth": 100,
+    "indentWidth": 2,
+    "semiColons": true,
+    "singleQuote": true,
+    "proseWrap": "preserve",
+    "include": ["src/", "tests/"],
+    "exclude": ["src/**/*.bs.js", "node_modules/", "dist/", "coverage/"]
+  },
+  "lint": {
+    "include": ["src/", "tests/"],
+    "exclude": ["src/**/*.bs.js", "node_modules/", "dist/"]
+  },
+  "test": {
+    "include": ["tests/**/*_test.js"]
+  },
+  "importMap": "./import_map.json"
+}

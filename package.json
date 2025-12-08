@@ -1,34 +1,40 @@
 {
   "name": "v3-templater",
   "version": "1.0.0",
-  "description": "A modern, secure, and high-performance templating engine with rich features",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "bin": {
-    "v3t": "dist/cli.js"
+  "description": "A modern, secure, and high-performance templating engine built with ReScript and Deno",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
   },
   "scripts": {
-    "build": "tsc",
-    "build:watch": "tsc --watch",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "lint": "eslint src/**/*.ts",
-    "lint:fix": "eslint src/**/*.ts --fix",
-    "format": "prettier --write \"src/**/*.ts\"",
-    "benchmark": "node dist/benchmark.js",
-    "prepublishOnly": "npm run build && npm test"
+    "build": "rescript build",
+    "build:watch": "rescript build -w",
+    "clean": "rescript clean",
+    "test": "deno task test",
+    "test:watch": "deno task test:watch",
+    "test:coverage": "deno task coverage",
+    "lint": "deno task lint",
+    "format": "deno task fmt",
+    "check": "deno task check",
+    "bench": "deno task bench",
+    "dev": "rescript build -w & deno run --watch --allow-read src/index.js",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "template",
     "templating",
     "template-engine",
+    "rescript",
+    "deno",
     "html",
     "mustache",
     "handlebars",
     "ejs",
     "view",
-    "rendering"
+    "rendering",
+    "functional",
+    "type-safe"
   ],
   "author": "v3-templater contributors",
   "license": "MIT",
@@ -46,15 +52,21 @@
   "dependencies": {
     "he": "^1.2.0"
   },
+  "dependencies": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/Hyperpolymath/v3-templater.git"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "deno": ">=1.38.0"
   },
   "files": [
-    "dist",
+    "src/**/*.res",
+    "src/**/*.bs.js",
+    "src/*.js",
+    "bsconfig.json",
+    "deno.json",
+    "import_map.json",
     "README.md",
     "LICENSE"
   ]
