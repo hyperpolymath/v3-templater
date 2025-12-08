@@ -1,345 +1,466 @@
-;;; STATE.scm - v3-templater Project State Checkpoint
-;;; Format: Guile Scheme (state.scm v2.0)
-;;; IMPORTANT: Download this file at end of each session!
+;;; ==================================================
+;;; STATE.scm — v3-templater Project State Checkpoint
+;;; ==================================================
 ;;;
-;;; License: MIT
-;;; Project: v3-templater
-;;; Last Updated: 2025-12-08
+;;; SPDX-License-Identifier: MIT AND LicenseRef-Palimpsest-0.8
+;;; Copyright (c) 2025 v3-templater contributors
+;;;
+;;; Project state checkpoint for AI conversation continuity.
+;;; Download at session end, upload at session start.
+;;;
+;;; ==================================================
 
 (define state
   '((metadata
      (format-version . "2.0")
-     (schema-date . "2025-12-08")
+     (schema-version . "2025-12-08")
+     (created-at . "2025-12-08T00:00:00Z")
+     (last-updated . "2025-12-08T00:00:00Z")
+     (generator . "Claude/STATE-system")
      (project . "v3-templater")
-     (generator . "Claude/Opus-4")
-     (created . "2025-12-08")
-     (last-updated . "2025-12-08"))
+     (repository . "https://github.com/hyperpolymath/v3-templater"))
 
-    (project-context
-     (name . "v3-templater")
-     (description . "Modern, secure, high-performance templating engine")
-     (version . "1.0.0")
-     (repository . "hyperpolymath/v3-templater")
-     (license . "MIT")
-     (primary-language . "ReScript")
-     (runtime . "Deno")
-     (status . "in-progress"))
+    (user
+     (name . "v3-templater maintainers")
+     (roles . ("Open source maintainers"))
+     (preferences
+      (languages-preferred . ("ReScript" "TypeScript" "JavaScript"))
+      (runtime-preferred . ("Deno"))
+      (tools-preferred . ("Just" "Nix" "Docker" "GitHub Actions"))
+      (values . ("Security-first" "Type safety" "Minimal dependencies" "Developer experience"))))
+
+    (session
+     (conversation-id . "2025-12-08-v3-templater-state")
+     (started-at . "2025-12-08T00:00:00Z")
+     (branch . "claude/create-state-scm-015Qv2Hczyj2czZPiHFn6WDc")
+     (token-limit-reached . #f))
+
+    (focus
+     (current-project . "v3-templater")
+     (current-phase . "ReScript/Deno migration completion")
+     (target-milestone . "MVP v1.0.0")
+     (blocking-issues . ("Parser module not implemented"
+                         "Compiler module not implemented"
+                         "Filters module not implemented"
+                         "ReScript compiler not installed"
+                         "No tests present")))
+
+    ;;; ==================================================
+    ;;; CURRENT POSITION
+    ;;; ==================================================
+    ;;;
+    ;;; v3-templater recently underwent a major architectural migration
+    ;;; from TypeScript/Node.js to ReScript/Deno (commit 1b2bfcb, Dec 8 2025).
+    ;;; The migration is INCOMPLETE - core modules are missing.
+    ;;;
+    ;;; What EXISTS and WORKS:
+    ;;; - Types.res: Full variant type system for AST nodes
+    ;;; - Lexer.res: Tokenization with custom delimiter support (916 lines total)
+    ;;; - Runtime.res: Expression evaluation (binary, unary, member access)
+    ;;; - Cache.res: LRU cache implementation
+    ;;; - Escape.res: XSS protection with SafeString support
+    ;;; - index.js: JavaScript interop layer (Template, AsyncTemplate classes)
+    ;;; - Documentation: Comprehensive (README, API.md, MIGRATION.md, etc.)
+    ;;; - Examples: 4 professional templates (email, blog, dashboard, basic)
+    ;;; - Governance: RSR PLATINUM compliance, TPCF Perimeter 3
+    ;;;
+    ;;; What is MISSING:
+    ;;; - Parser.res: Not implemented (tokens -> AST)
+    ;;; - Compiler.res: Not implemented (AST -> code generation)
+    ;;; - Filters.res: Not implemented (30+ built-in filters)
+    ;;; - Tests: Zero test files (migration removed old tests)
+    ;;; - Build artifacts: No .bs.js compiled files
+    ;;; - CI/CD: Still targets Node.js, not updated for Deno
+    ;;;
 
     (current-position
-     (phase . "architectural-transition")
-     (summary . "Project caught mid-refactoring from TypeScript/Node.js to ReScript/Deno")
-     (build-status . "broken")
-     (test-status . "non-functional")
-     (overall-completion . 45)
+     (overall-status . "incomplete")
+     (architecture . "ReScript/Deno (migration in progress)")
+     (completion-percentage . 35)
+     (last-commit . "1b2bfcb")
+     (last-commit-message . "refactor: migrate from TypeScript/Node.js to ReScript/Deno architecture (#24)")
 
-     (implemented-components
-      ((name . "Lexer")
-       (file . "src/Lexer.res")
-       (status . "complete")
-       (lines . 343)
-       (description . "Tokenization with custom delimiter support"))
-      ((name . "Runtime")
-       (file . "src/Runtime.res")
-       (status . "complete")
-       (lines . 193)
-       (description . "Expression evaluation engine"))
-      ((name . "Cache")
-       (file . "src/Cache.res")
-       (status . "complete")
-       (lines . 88)
-       (description . "LRU caching mechanism"))
-      ((name . "Escape")
-       (file . "src/utils/Escape.res")
-       (status . "complete")
-       (lines . 101)
-       (description . "HTML escaping and SafeString"))
+     (completed-modules
       ((name . "Types")
        (file . "src/Types.res")
        (status . "complete")
-       (lines . 191)
-       (description . "Core type definitions and AST nodes"))
-      ((name . "JS-Interop")
-       (file . "src/index.js")
-       (status . "partial")
-       (lines . 202)
-       (description . "JavaScript/Deno interop layer")))
+       (notes . "Full variant type system for AST nodes"))
 
-     (missing-components
+      ((name . "Lexer")
+       (file . "src/Lexer.res")
+       (status . "complete")
+       (notes . "Tokenization with custom delimiter support"))
+
+      ((name . "Runtime")
+       (file . "src/Runtime.res")
+       (status . "complete")
+       (notes . "Expression evaluation without eval()"))
+
+      ((name . "Cache")
+       (file . "src/Cache.res")
+       (status . "complete")
+       (notes . "LRU cache implementation"))
+
+      ((name . "Escape")
+       (file . "src/utils/Escape.res")
+       (status . "complete")
+       (notes . "XSS protection, SafeString class")))
+
+     (missing-modules
       ((name . "Parser")
+       (file . "src/Parser.res")
+       (status . "not-started")
        (priority . "critical")
-       (description . "Tokens to AST transformation"))
+       (notes . "Converts tokens to AST - BLOCKS ALL FUNCTIONALITY"))
+
       ((name . "Compiler")
+       (file . "src/Compiler.res")
+       (status . "not-started")
        (priority . "critical")
-       (description . "AST to executable render functions"))
+       (notes . "Generates executable code from AST"))
+
       ((name . "Filters")
+       (file . "src/Filters.res")
+       (status . "not-started")
        (priority . "high")
-       (description . "30+ built-in filter functions"))
+       (notes . "30+ built-in filters needed"))
+
       ((name . "Template")
+       (file . "src/Template.res")
+       (status . "not-started")
        (priority . "high")
-       (description . "Main Template class API"))
+       (notes . "Main Template class in ReScript"))
+
       ((name . "AsyncTemplate")
+       (file . "src/AsyncTemplate.res")
+       (status . "not-started")
        (priority . "medium")
-       (description . "Async file loading support"))
-      ((name . "CLI")
-       (priority . "low")
-       (description . "Command-line interface")))
+       (notes . "Async file loading support")))
 
-     (source-stats
-      (rescript-files . 5)
-      (javascript-files . 1)
-      (total-source-lines . 916)))
+     (infrastructure-issues
+      ("ReScript compiler not installed - npm run build fails")
+      ("Deno runtime not installed - cannot run tests")
+      ("No .bs.js compiled files present")
+      ("package.json has duplicate 'dependencies' field - syntax error")
+      ("CI/CD pipelines still target Node.js, not Deno")
+      ("justfile tasks still use npm/Node.js commands")
+      ("flake.nix references Node.js dependencies")))
 
-    (route-to-mvp-v1
-     (description . "Steps to reach functional MVP v1.0.0")
+    ;;; ==================================================
+    ;;; ROUTE TO MVP v1.0.0
+    ;;; ==================================================
 
-     (phase-1-fix-build
-      (priority . 1)
-      (status . "blocked")
+    (mvp-roadmap
+     (target-version . "1.0.0")
+     (estimated-completion . 65)
+     (description . "Functional templating engine with core features")
+
+     (phase-1-critical
+      (name . "Core Module Implementation")
+      (status . "not-started")
       (tasks
-       ((task . "Add rescript package to dependencies")
-        (status . "pending")
-        (blocking . #t))
-       ((task . "Run npm install to resolve dependencies")
-        (status . "pending"))
-       ((task . "Fix duplicate dependencies key in package.json")
-        (status . "pending"))
-       ((task . "Run npm run build to generate .bs.js files")
-        (status . "pending"))
-       ((task . "Update flake.nix for Deno/ReScript toolchain")
-        (status . "pending"))))
+       ("Implement Parser.res - convert tokens to AST nodes")
+       ("Implement Compiler.res - generate render functions from AST")
+       ("Implement Filters.res - 30+ built-in filters")
+       ("Implement Template.res - main synchronous API")
+       ("Connect JavaScript interop layer to ReScript modules")))
 
-     (phase-2-implement-core
-      (priority . 2)
-      (status . "blocked")
-      (depends-on . "phase-1-fix-build")
+     (phase-2-testing
+      (name . "Test Suite Creation")
+      (status . "not-started")
       (tasks
-       ((task . "Implement Parser.res - token to AST transformation")
-        (status . "pending")
-        (estimate . "medium"))
-       ((task . "Implement Compiler.res - AST to render functions")
-        (status . "pending")
-        (estimate . "large"))
-       ((task . "Implement Filters.res - 30+ built-in filters")
-        (status . "pending")
-        (estimate . "medium"))
-       ((task . "Complete index.js interop layer")
-        (status . "pending")
-        (estimate . "small"))))
+       ("Create tests/ directory structure")
+       ("Port lexer tests from old TypeScript suite")
+       ("Port parser tests")
+       ("Port compiler tests")
+       ("Port filter tests")
+       ("Port runtime tests")
+       ("Port escape/security tests")
+       ("Achieve 80%+ test coverage")))
 
-     (phase-3-testing
-      (priority . 3)
-      (status . "blocked")
-      (depends-on . "phase-2-implement-core")
+     (phase-3-infrastructure
+      (name . "Build & CI/CD Updates")
+      (status . "not-started")
       (tasks
-       ((task . "Create tests/ directory structure")
-        (status . "pending"))
-       ((task . "Write unit tests for Lexer")
-        (status . "pending"))
-       ((task . "Write unit tests for Parser")
-        (status . "pending"))
-       ((task . "Write unit tests for Compiler")
-        (status . "pending"))
-       ((task . "Write unit tests for Runtime")
-        (status . "pending"))
-       ((task . "Write unit tests for Filters")
-        (status . "pending"))
-       ((task . "Write integration tests")
-        (status . "pending"))
-       ((task . "Achieve 80%+ test coverage")
-        (status . "pending"))))
+       ("Fix package.json duplicate dependencies field")
+       ("Install ReScript compiler and verify build")
+       ("Install Deno and verify tests run")
+       ("Update GitHub Actions CI for Deno")
+       ("Update GitLab CI for Deno")
+       ("Update justfile for Deno tasks")
+       ("Update flake.nix for Deno")))
 
-     (phase-4-ci-cd
-      (priority . 4)
-      (status . "blocked")
-      (depends-on . "phase-3-testing")
+     (phase-4-documentation
+      (name . "Documentation Updates")
+      (status . "partially-complete")
       (tasks
-       ((task . "Update .github/workflows/ci.yml for Deno")
-        (status . "pending"))
-       ((task . "Update .gitlab-ci.yml for Deno")
-        (status . "pending"))
-       ((task . "Verify RSR compliance with working build")
-        (status . "pending"))
-       ((task . "Test release automation")
-        (status . "pending")))))
+       ("Update CLAUDE.md for ReScript architecture")
+       ("Update README.md installation examples")
+       ("Update DEVELOPMENT_SUMMARY.md")
+       ("Update CONTRIBUTING.md for Deno workflow")
+       ("Verify all examples work with new architecture")))
+
+     (mvp-feature-checklist
+      ((feature . "Variable interpolation")
+       (syntax . "{{ variable }}")
+       (status . "blocked")
+       (blocker . "Parser not implemented"))
+
+      ((feature . "Object property access")
+       (syntax . "{{ object.property }}")
+       (status . "blocked")
+       (blocker . "Parser not implemented"))
+
+      ((feature . "Filter chaining")
+       (syntax . "{{ value | upper | truncate(10) }}")
+       (status . "blocked")
+       (blocker . "Filters not implemented"))
+
+      ((feature . "Conditionals")
+       (syntax . "{% if %} {% elif %} {% else %} {% endif %}")
+       (status . "blocked")
+       (blocker . "Parser not implemented"))
+
+      ((feature . "Loops")
+       (syntax . "{% for item in items %}")
+       (status . "blocked")
+       (blocker . "Parser not implemented"))
+
+      ((feature . "Template inheritance")
+       (syntax . "{% extends %} {% block %}")
+       (status . "blocked")
+       (blocker . "Compiler not implemented"))
+
+      ((feature . "Includes")
+       (syntax . "{% include 'partial.html' %}")
+       (status . "blocked")
+       (blocker . "Compiler not implemented"))
+
+      ((feature . "Auto-escaping")
+       (status . "ready")
+       (notes . "Escape.res implemented"))
+
+      ((feature . "LRU caching")
+       (status . "ready")
+       (notes . "Cache.res implemented"))
+
+      ((feature . "Expression evaluation")
+       (status . "ready")
+       (notes . "Runtime.res implemented"))))
+
+    ;;; ==================================================
+    ;;; KNOWN ISSUES
+    ;;; ==================================================
 
     (issues
      (critical
-      ((id . "ISS-001")
-       (title . "ReScript compiler not installed")
-       (description . "rescript package missing from dependencies - npm run build fails")
-       (impact . "Build completely broken")
-       (resolution . "Add rescript to devDependencies"))
-      ((id . "ISS-002")
-       (title . "Missing core ReScript modules")
-       (description . "Parser.res, Compiler.res, Filters.res do not exist")
-       (impact . "Template engine non-functional")
-       (resolution . "Implement missing modules"))
-      ((id . "ISS-003")
-       (title . "Tests directory missing")
-       (description . "deno.json references tests/ but directory doesn't exist")
-       (impact . "Cannot run tests")
-       (resolution . "Create tests/ with comprehensive test suite")))
+      ((id . "CRIT-001")
+       (title . "Parser module not implemented")
+       (impact . "No template parsing possible - blocks all functionality")
+       (resolution . "Implement Parser.res following Types.res AST structure"))
+
+      ((id . "CRIT-002")
+       (title . "Compiler module not implemented")
+       (impact . "Cannot generate executable code from AST")
+       (resolution . "Implement Compiler.res for code generation"))
+
+      ((id . "CRIT-003")
+       (title . "Build environment broken")
+       (impact . "npm run build fails - ReScript not installed")
+       (resolution . "Install ReScript compiler, generate .bs.js files"))
+
+      ((id . "CRIT-004")
+       (title . "No tests present")
+       (impact . "Cannot verify functionality, no regression protection")
+       (resolution . "Create Deno test suite in tests/ directory")))
 
      (high
-      ((id . "ISS-004")
-       (title . "Duplicate dependencies key in package.json")
-       (description . "package.json has 'dependencies' key declared twice")
-       (impact . "May cause npm parsing issues")
-       (resolution . "Merge duplicate keys"))
-      ((id . "ISS-005")
-       (title . "Outdated flake.nix configuration")
-       (description . "Nix flake still references TypeScript/Jest toolchain")
-       (impact . "Reproducible builds broken")
-       (resolution . "Update for Deno/ReScript stack")))
+      ((id . "HIGH-001")
+       (title . "Filters module not implemented")
+       (impact . "30+ built-in filters unavailable")
+       (resolution . "Implement Filters.res with all documented filters"))
+
+      ((id . "HIGH-002")
+       (title . "CI/CD pipelines outdated")
+       (impact . "GitHub Actions and GitLab CI will fail")
+       (resolution . "Update workflows for Deno runtime"))
+
+      ((id . "HIGH-003")
+       (title . "package.json syntax error")
+       (impact . "Duplicate 'dependencies' field - may cause npm failures")
+       (resolution . "Remove duplicate field from package.json")))
 
      (medium
-      ((id . "ISS-006")
-       (title . "Documentation mismatch")
-       (description . "CONTRIBUTING.md and CLAUDE.md still describe TypeScript workflow")
-       (impact . "Confusing for contributors")
-       (resolution . "Update documentation for ReScript/Deno"))
-      ((id . "ISS-007")
-       (title . "Obsolete dev dependencies")
-       (description . "TypeScript, Jest, ts-jest still in devDependencies")
-       (impact . "Unnecessary bloat")
-       (resolution . "Remove obsolete packages"))))
+      ((id . "MED-001")
+       (title . "Documentation outdated")
+       (impact . "CLAUDE.md, README still mention TypeScript")
+       (resolution . "Update documentation for ReScript/Deno architecture"))
 
-    (questions-for-maintainer
-     ((q1 . "Should we complete the ReScript/Deno migration or revert to TypeScript/Node.js?")
-      (context . "ReScript offers better type safety but smaller community"))
-     ((q2 . "What is the target ReScript version for the build?")
-      (context . "rescript package version needs to be specified"))
-     ((q3 . "Should the flake.nix be updated for Deno or remain Node.js focused?")
-      (context . "Current Nix configuration is for old TypeScript stack"))
-     ((q4 . "Are the original TypeScript source files archived anywhere?")
-      (context . "May be useful for reference during ReScript implementation"))
-     ((q5 . "What's the priority order for implementing missing filters?")
-      (context . "30+ filters mentioned - which are critical for MVP?")))
+      ((id . "MED-002")
+       (title . "justfile uses npm commands")
+       (impact . "Automation tasks won't work with Deno")
+       (resolution . "Update justfile recipes for Deno"))
 
-    (long-term-roadmap
-     (v1.0.0-mvp
+      ((id . "MED-003")
+       (title . "Examples may not work")
+       (impact . "Example templates reference old structure")
+       (resolution . "Verify and update examples after core is complete")))
+
+     (low
+      ((id . "LOW-001")
+       (title . "Limited inline documentation")
+       (impact . "ReScript files lack docstrings")
+       (resolution . "Add documentation comments to modules"))
+
+      ((id . "LOW-002")
+       (title . "RSR compliance references SILVER in some docs")
+       (impact . "Minor documentation inconsistency")
+       (resolution . "Update all references to PLATINUM"))))
+
+    ;;; ==================================================
+    ;;; QUESTIONS FOR MAINTAINER
+    ;;; ==================================================
+
+    (questions
+     ((id . "Q-001")
+      (question . "Should the TypeScript/Node.js fallback be maintained?")
+      (context . "package.json still has TypeScript dependencies. Is this intentional for backwards compatibility or should they be removed?")
+      (options . ("Remove TypeScript deps entirely"
+                  "Keep as fallback during migration"
+                  "Maintain dual-stack support")))
+
+     ((id . "Q-002")
+      (question . "What is the priority order for implementing missing modules?")
+      (context . "Parser, Compiler, and Filters are all critical. What order would you prefer?")
+      (suggested . "Parser -> Compiler -> Template -> Filters -> AsyncTemplate"))
+
+     ((id . "Q-003")
+      (question . "Should tests be written in ReScript or JavaScript/Deno?")
+      (context . "deno.json expects tests in tests/**/*_test.js format. Should tests be ReScript compiled to JS, or native Deno JS?")
+      (options . ("ReScript tests compiled to JS"
+                  "Native Deno JavaScript tests"
+                  "Mix of both")))
+
+     ((id . "Q-004")
+      (question . "Is there a reference implementation for the Parser?")
+      (context . "The old TypeScript parser was removed. Is there documentation or specification for parsing rules beyond what's in README?")
+      (notes . "Types.res defines AST structure but parsing logic needs specification"))
+
+     ((id . "Q-005")
+      (question . "What's the target Deno version?")
+      (context . "import_map.json uses deno.land/std@0.210.0. Should this be updated to latest stable?")
+      (current . "0.210.0")
+      (latest . "unknown"))
+
+     ((id . "Q-006")
+      (question . "Should the CLI be implemented in ReScript or kept as JavaScript?")
+      (context . "cli.ts was removed. New CLI implementation approach needed.")
+      (options . ("ReScript CLI with Deno"
+                  "Pure Deno JavaScript CLI"
+                  "Defer CLI to post-MVP")))
+
+     ((id . "Q-007")
+      (question . "Is browser build still planned for v1.1.0?")
+      (context . "CHANGELOG mentions browser build. Does ReScript/Deno change this timeline?")
+      (notes . "ReScript can compile to browser-compatible JS")))
+
+    ;;; ==================================================
+    ;;; LONG-TERM ROADMAP
+    ;;; ==================================================
+
+    (roadmap
+     (v1-0-0
+      (name . "MVP Release")
       (status . "in-progress")
-      (target . "Complete ReScript/Deno migration")
+      (completion . 35)
       (features
-       ("Core template rendering"
-        "Variable interpolation"
-        "Filter system (basic set)"
-        "Conditionals and loops"
-        "Template inheritance"
-        "Includes"
-        "Auto-escaping (XSS protection)"
-        "LRU caching"
-        "CLI tool")))
+       ("Complete ReScript/Deno migration")
+       ("Core templating: variables, filters, conditionals, loops")
+       ("Template inheritance and includes")
+       ("30+ built-in filters")
+       ("Auto-escaping and XSS protection")
+       ("LRU template caching")
+       ("Comprehensive test suite (80%+ coverage)")
+       ("Updated documentation")
+       ("Working CI/CD pipelines")))
 
-     (v1.1.0
+     (v1-1-0
+      (name . "Async & Browser")
       (status . "planned")
+      (completion . 0)
       (features
-       ("Async filter support"
-        "Browser build (UMD/ESM)"
-        "Enhanced date formatting"
-        "Streaming support (initial)")))
+       ("Async filter support")
+       ("Browser build (ESM/UMD)")
+       ("Streaming template rendering")
+       ("Enhanced date formatting filters")
+       ("WebAssembly compilation path")))
 
-     (v1.2.0
+     (v1-2-0
+      (name . "Developer Experience")
       (status . "planned")
+      (completion . 0)
       (features
-       ("Macro support"
-        "Template debugging tools"
-        "Additional filters"
-        "IDE integration helpers")))
+       ("Macro support for reusable fragments")
+       ("Template debugging tools")
+       ("Source maps for error tracking")
+       ("Additional utility filters")
+       ("IDE integration support")))
 
-     (v1.3.0
+     (v1-3-0
+      (name . "Advanced Features")
       (status . "planned")
+      (completion . 0)
       (features
-       ("Full streaming support"
-        "Template linting"
-        "Hot reload for development"
-        "Performance optimizations")))
+       ("Template linting and validation")
+       ("Hot reload support")
+       ("Performance profiling tools")
+       ("Custom tag registration")
+       ("Internationalization helpers")))
 
-     (v2.0.0
+     (v2-0-0
+      (name . "Next Generation")
       (status . "future")
+      (completion . 0)
       (features
-       ("Breaking changes TBD"
-        "Major API improvements"
-        "New templating features"))))
+       ("Full WASM runtime option")
+       ("Compile-time template validation")
+       ("Multi-language template support")
+       ("Distributed caching")
+       ("Plugin ecosystem"))))
 
-    (dependencies
-     (production
-      ((name . "he")
-       (version . "^1.2.0")
-       (purpose . "HTML entity encoding for XSS protection")))
+    ;;; ==================================================
+    ;;; ARCHITECTURE DECISION RECORDS
+    ;;; ==================================================
 
-     (development-needed
-      ((name . "rescript")
-       (version . "TBD")
-       (purpose . "ReScript compiler - CRITICAL MISSING")
-       (status . "not-installed")))
-
-     (development-obsolete
-      ("typescript"
-       "jest"
-       "ts-jest"
-       "@types/jest"
-       "@typescript-eslint/parser"
-       "@typescript-eslint/eslint-plugin")))
-
-    (compliance
-     (claimed
-      (rsr-platinum . #t)
-      (requirements-met . "42/42"))
-     (actual
-      (build-passing . #f)
-      (tests-passing . #f)
-      (coverage . "unknown")
-      (note . "Compliance claims cannot be verified with broken build")))
-
-    (architecture-decisions
-     ((adr . "0001")
-      (title . "ReScript + Deno Migration")
+    (adrs
+     ((id . "ADR-0001")
+      (title . "Migrate from TypeScript/Node.js to ReScript/Deno")
       (status . "accepted")
-      (date . "2025-12-01")
-      (summary . "Migrate from TypeScript/Node.js to ReScript/Deno for better type safety"))
-     ((adr . "0002")
-      (title . "Auto-Escaping by Default")
+      (date . "2025-12-08")
+      (context . "Need sound type system, better security, modern runtime")
+      (decision . "Adopt ReScript for type safety, Deno for runtime")
+      (consequences . ("Smaller community" "Learning curve" "Less ecosystem" "Better types" "No node_modules")))
+
+     ((id . "ADR-0002")
+      (title . "Adopt RSR PLATINUM compliance")
       (status . "accepted")
-      (date . "2025-12-01")
-      (summary . "All variables HTML-escaped unless marked with | safe filter")))
+      (date . "2025-12-08")
+      (context . "Establish high-quality open source practices")
+      (decision . "Meet all 42 RSR requirements")
+      (consequences . ("More documentation" "Better security" "CI/CD overhead" "Higher trust"))))
 
-    (critical-next-actions
-     ((priority . 1)
-      (action . "Add rescript package to package.json devDependencies")
-      (blocking . #t))
-     ((priority . 2)
-      (action . "Fix duplicate dependencies key in package.json"))
-     ((priority . 3)
-      (action . "Run npm install && npm run build to verify build works"))
-     ((priority . 4)
-      (action . "Implement Parser.res module"))
-     ((priority . 5)
-      (action . "Implement Compiler.res module")))
+    ;;; ==================================================
+    ;;; SESSION FILES
+    ;;; ==================================================
 
-    (session-notes
-     (date . "2025-12-08")
-     (session-id . "01CxzAP1LoSWk4Ed7fEk5sc1")
-     (branch . "claude/create-state-scm-01CxzAP1LoSWk4Ed7fEk5sc1")
-     (summary . "Initial STATE.scm creation - documented current project state")
-     (files-created . ("STATE.scm"))
-     (files-modified . ()))))
+    (files-created-this-session
+     ("STATE.scm"))
 
-;;; Quick Reference - Query Functions
-;;;
-;;; Get current focus:
-;;;   (assoc 'current-position state)
-;;;
-;;; Get critical issues:
-;;;   (assoc 'critical (assoc 'issues state))
-;;;
-;;; Get route to MVP:
-;;;   (assoc 'route-to-mvp-v1 state)
-;;;
-;;; Get roadmap:
-;;;   (assoc 'long-term-roadmap state)
-;;;
-;;; Get next actions:
-;;;   (assoc 'critical-next-actions state)
+    (files-modified-this-session
+     ())
 
-;;; End of STATE.scm
+    (context-notes . "Project underwent major architecture migration Dec 8, 2025. Migration is INCOMPLETE. Priority: implement Parser, Compiler, Filters modules to achieve MVP v1.0.0. Download STATE.scm at session end!")))
+
+;;; ==================================================
+;;; END STATE.scm
+;;; ==================================================
