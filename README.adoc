@@ -1,4 +1,4 @@
-# v3-templater
+= v3-templater
 
 A modern, secure, and high-performance templating engine built with ReScript and Deno. Zero TypeScript, zero Node.js.
 
@@ -10,32 +10,32 @@ A modern, secure, and high-performance templating engine built with ReScript and
 [![Security](https://img.shields.io/badge/security.txt-RFC%209116-blue.svg)](https://github.com/Hyperpolymath/v3-templater/blob/main/.well-known/security.txt)
 [![CI/CD](https://img.shields.io/badge/CI-GitHub%20%2B%20GitLab-orange.svg)](https://github.com/Hyperpolymath/v3-templater/blob/main/.github/workflows/ci.yml)
 
-## Features
+== Features
 
-- 🚀 **High Performance** - Fast compilation and rendering with built-in caching
-- 🔒 **Security First** - XSS protection with automatic HTML escaping
-- 🦀 **ReScript** - Sound type system, no null errors, exhaustive pattern matching
-- 🦕 **Deno** - Modern runtime with built-in tooling, no node_modules
-- 🎨 **Rich Syntax** - Variables, conditionals, loops, filters, inheritance, and more
-- 🔧 **Extensible** - Custom filters, helpers, and plugin system
-- 📦 **Zero Dependencies** - No production dependencies (only he for HTML via CDN)
-- 🛠️ **Built-in Tools** - No jest, eslint, prettier needed - Deno includes them all
-- ✅ **Well Tested** - Comprehensive test coverage with Deno test
-- 🏆 **RSR Compliant** - PLATINUM level Rhodium Standard Repository compliance
-- 🌍 **Community Driven** - TPCF Perimeter 3 (fully open contribution)
-- 🤖 **Multi-CI** - GitHub Actions + GitLab CI pipelines
-- 🐳 **Container Ready** - Docker and docker-compose support
-- 📝 **ADRs** - Architecture Decision Records documented
-- ⚡ **WASM Ready** - Easy path to WebAssembly for performance
+- 🚀 *High Performance* - Fast compilation and rendering with built-in caching
+- 🔒 *Security First* - XSS protection with automatic HTML escaping
+- 🦀 *ReScript* - Sound type system, no null errors, exhaustive pattern matching
+- 🦕 *Deno* - Modern runtime with built-in tooling, no node_modules
+- 🎨 *Rich Syntax* - Variables, conditionals, loops, filters, inheritance, and more
+- 🔧 *Extensible* - Custom filters, helpers, and plugin system
+- 📦 *Zero Dependencies* - No production dependencies (only he for HTML via CDN)
+- 🛠️ *Built-in Tools* - No jest, eslint, prettier needed - Deno includes them all
+- ✅ *Well Tested* - Comprehensive test coverage with Deno test
+- 🏆 *RSR Compliant* - PLATINUM level Rhodium Standard Repository compliance
+- 🌍 *Community Driven* - TPCF Perimeter 3 (fully open contribution)
+- 🤖 *Multi-CI* - GitHub Actions + GitLab CI pipelines
+- 🐳 *Container Ready* - Docker and docker-compose support
+- 📝 *ADRs* - Architecture Decision Records documented
+- ⚡ *WASM Ready* - Easy path to WebAssembly for performance
 
-## Prerequisites
+== Prerequisites
 
 - [Deno](https://deno.land/) 1.38 or later
 - [ReScript](https://rescript-lang.org/) 11.0 or later (for development)
 
-## Installation
+== Installation
 
-### For Deno Projects
+=== For Deno Projects
 
 ```typescript
 import { Template } from 'https://deno.land/x/v3_templater/mod.ts';
@@ -45,24 +45,24 @@ const result = template.render('Hello {{ name }}!', { name: 'World' });
 console.log(result); // "Hello World!"
 ```
 
-### For Development
+=== For Development
 
 ```bash
-# Clone the repository
+= Clone the repository
 git clone https://github.com/Hyperpolymath/v3-templater.git
 cd v3-templater
 
-# Install ReScript compiler
+= Install ReScript compiler
 npm install
 
-# Build ReScript to JavaScript
+= Build ReScript to JavaScript
 npm run build
 
-# Run tests with Deno
+= Run tests with Deno
 deno task test
 ```
 
-## Quick Start
+== Quick Start
 
 ```javascript
 // Import from Deno module
@@ -86,9 +86,9 @@ const html = await template.renderFile('./templates/page.html', {
 });
 ```
 
-## Template Syntax
+== Template Syntax
 
-### Variables
+=== Variables
 
 ```html
 {{ variable }}
@@ -96,7 +96,7 @@ const html = await template.renderFile('./templates/page.html', {
 {{ array.0 }}
 ```
 
-### Filters
+=== Filters
 
 ```html
 {{ name | upper }}
@@ -105,7 +105,7 @@ const html = await template.renderFile('./templates/page.html', {
 {{ text | truncate(100) }}
 ```
 
-### Conditionals
+=== Conditionals
 
 ```html
 {% if user.isAdmin %}
@@ -117,7 +117,7 @@ const html = await template.renderFile('./templates/page.html', {
 {% endif %}
 ```
 
-### Loops
+=== Loops
 
 ```html
 {% for item in items %}
@@ -132,9 +132,9 @@ Loop variables:
 - `loop.last` - True if last iteration
 - `loop.length` - Total number of items
 
-### Blocks and Inheritance
+=== Blocks and Inheritance
 
-**base.html:**
+*base.html:*
 ```html
 <html>
   <head>
@@ -146,7 +146,7 @@ Loop variables:
 </html>
 ```
 
-**page.html:**
+*page.html:*
 ```html
 {% extends "base.html" %}
 
@@ -157,7 +157,7 @@ Loop variables:
 {% endblock %}
 ```
 
-### Includes
+=== Includes
 
 ```html
 {% include "header.html" %}
@@ -165,9 +165,9 @@ Loop variables:
 {% include "footer.html" %}
 ```
 
-## Built-in Filters
+== Built-in Filters
 
-### String Filters
+=== String Filters
 - `upper` - Convert to uppercase
 - `lower` - Convert to lowercase
 - `capitalize` - Capitalize first letter
@@ -177,7 +177,7 @@ Loop variables:
 - `truncate(length, suffix)` - Truncate to length
 - `replace(search, replacement)` - Replace substring
 
-### Array Filters
+=== Array Filters
 - `length` - Get length
 - `join(separator)` - Join elements
 - `first` - Get first element
@@ -187,7 +187,7 @@ Loop variables:
 - `unique` - Get unique values
 - `slice(start, end)` - Slice array
 
-### Number Filters
+=== Number Filters
 - `abs` - Absolute value
 - `round` - Round number
 - `floor` - Floor number
@@ -195,7 +195,7 @@ Loop variables:
 - `fixed(decimals)` - Fixed decimal places
 - `percent(decimals)` - Format as percentage
 
-### Utility Filters
+=== Utility Filters
 - `default(value)` - Default value if undefined
 - `json(indent)` - Format as JSON
 - `safe` - Mark as safe (no escaping)
@@ -204,9 +204,9 @@ Loop variables:
 - `urldecode` - URL decode
 - `date(format)` - Format date
 
-## API
+== API
 
-### Creating a Template Engine
+=== Creating a Template Engine
 
 ```javascript
 const { Template } = require('v3-templater');
@@ -222,7 +222,7 @@ const template = new Template({
 });
 ```
 
-### Rendering Templates
+=== Rendering Templates
 
 ```javascript
 // Render from string
@@ -238,7 +238,7 @@ const result1 = compiled.render({ name: 'Alice' });
 const result2 = compiled.render({ name: 'Bob' });
 ```
 
-### Custom Filters
+=== Custom Filters
 
 ```javascript
 template.addFilter('reverse', (value) => {
@@ -249,7 +249,7 @@ template.render('{{ text | reverse }}', { text: 'hello' });
 // Output: "olleh"
 ```
 
-### Custom Helpers
+=== Custom Helpers
 
 ```javascript
 template.addHelper('formatCurrency', (value, currency = 'USD') => {
@@ -260,7 +260,7 @@ template.addHelper('formatCurrency', (value, currency = 'USD') => {
 });
 ```
 
-### Plugins
+=== Plugins
 
 ```javascript
 const myPlugin = {
@@ -276,31 +276,31 @@ const template = new Template({
 });
 ```
 
-## CLI Usage
+== CLI Usage
 
 ```bash
-# Basic usage
+= Basic usage
 v3t -t template.html -d data.json
 
-# Output to file
+= Output to file
 v3t -t template.html -d data.json -o output.html
 
-# Disable auto-escaping
+= Disable auto-escaping
 v3t -t template.html -d data.json --no-escape
 
-# Enable strict mode
+= Enable strict mode
 v3t -t template.html -d data.json --strict
 
-# Show help
+= Show help
 v3t --help
 
-# Show version
+= Show version
 v3t --version
 ```
 
-## Examples
+== Examples
 
-### Email Template
+=== Email Template
 
 ```javascript
 const emailTemplate = `
@@ -339,7 +339,7 @@ const result = template.render(emailTemplate, {
 });
 ```
 
-### Blog Post
+=== Blog Post
 
 ```javascript
 const blogTemplate = `
@@ -372,14 +372,14 @@ const blogTemplate = `
 `;
 ```
 
-## Security
+== Security
 
 v3-templater takes security seriously:
 
-- **Auto-escaping**: HTML entities are automatically escaped by default to prevent XSS attacks
-- **SafeString**: Use the `safe` filter to mark trusted content
-- **Strict Mode**: Enable strict mode to catch undefined variables
-- **No Eval**: Templates are compiled without using `eval()` or `Function()` constructor
+- *Auto-escaping*: HTML entities are automatically escaped by default to prevent XSS attacks
+- *SafeString*: Use the `safe` filter to mark trusted content
+- *Strict Mode*: Enable strict mode to catch undefined variables
+- *No Eval*: Templates are compiled without using `eval()` or `Function()` constructor
 
 ```javascript
 // Unsafe input is automatically escaped
@@ -395,21 +395,21 @@ template.render('{{ html | safe }}', {
 // Output: <b>Bold text</b>
 ```
 
-## Performance
+== Performance
 
 v3-templater is designed for high performance:
 
-- **Compiled Templates**: Templates are compiled to optimized JavaScript
-- **Smart Caching**: LRU cache for compiled templates
-- **Minimal Overhead**: Lightweight parser and runtime
-- **Benchmarks**: Run `npm run benchmark` to see performance metrics
+- *Compiled Templates*: Templates are compiled to optimized JavaScript
+- *Smart Caching*: LRU cache for compiled templates
+- *Minimal Overhead*: Lightweight parser and runtime
+- *Benchmarks*: Run `npm run benchmark` to see performance metrics
 
 Typical performance (on modern hardware):
 - Simple variables: ~100,000 ops/sec
 - With caching: ~500,000+ ops/sec
 - Complex templates: ~50,000 ops/sec
 
-## Comparison with Other Engines
+== Comparison with Other Engines
 
 | Feature | v3-templater | Handlebars | EJS | Pug |
 |---------|-------------|------------|-----|-----|
@@ -420,70 +420,70 @@ Typical performance (on modern hardware):
 | Learning Curve | Easy | Easy | Very Easy | Medium |
 | Extensibility | ✅ | ✅ | Limited | ✅ |
 
-## Contributing
+== Contributing
 
 Contributions are welcome! Please read our contributing guidelines and submit pull requests.
 
-## RSR Compliance
+== RSR Compliance
 
-v3-templater achieves **PLATINUM level** compliance with the [Rhodium Standard Repository (RSR) Framework](https://github.com/Hyperpolymath/rhodium-standard-repository) - the highest tier of project quality and governance.
+v3-templater achieves *PLATINUM level* compliance with the [Rhodium Standard Repository (RSR) Framework](https://github.com/Hyperpolymath/rhodium-standard-repository) - the highest tier of project quality and governance.
 
-### Compliance Checklist (42/42 Requirements ✅)
+=== Compliance Checklist (42/42 Requirements ✅)
 
-#### Bronze Level
-✅ **Type Safety**: TypeScript strict mode
-✅ **Memory Safety**: Garbage collected (JavaScript/TypeScript)
-✅ **Documentation**: README, API docs, migration guides, contributing guide
-✅ **License**: MIT + Palimpsest v0.8 dual licensing
-✅ **Security**: SECURITY.md, RFC 9116 security.txt
-✅ **Code of Conduct**: Contributor Covenant 2.1
-✅ **Maintainers**: TPCF Perimeter 3 (Community Sandbox)
+==== Bronze Level
+✅ *Type Safety*: TypeScript strict mode
+✅ *Memory Safety*: Garbage collected (JavaScript/TypeScript)
+✅ *Documentation*: README, API docs, migration guides, contributing guide
+✅ *License*: MIT + Palimpsest v0.8 dual licensing
+✅ *Security*: SECURITY.md, RFC 9116 security.txt
+✅ *Code of Conduct*: Contributor Covenant 2.1
+✅ *Maintainers*: TPCF Perimeter 3 (Community Sandbox)
 
-#### Silver Level
-✅ **.well-known/**: security.txt, ai.txt, humans.txt
-✅ **Build System**: npm scripts + justfile + flake.nix
-✅ **CI/CD**: GitHub Actions with comprehensive testing
-✅ **Tests**: 5 test suites, 80%+ coverage enforced
-✅ **Automation**: justfile with 25+ recipes
+==== Silver Level
+✅ *.well-known/*: security.txt, ai.txt, humans.txt
+✅ *Build System*: npm scripts + justfile + flake.nix
+✅ *CI/CD*: GitHub Actions with comprehensive testing
+✅ *Tests*: 5 test suites, 80%+ coverage enforced
+✅ *Automation*: justfile with 25+ recipes
 
-#### Gold Level
-✅ **Nix Flakes**: Reproducible builds with flake.nix
-✅ **Coverage Enforcement**: CI fails below 80% threshold
-✅ **Security Scanning**: CodeQL, npm audit automated
-✅ **Performance**: Benchmarks in CI pipeline
-✅ **RSR Verification**: Automated compliance checks
+==== Gold Level
+✅ *Nix Flakes*: Reproducible builds with flake.nix
+✅ *Coverage Enforcement*: CI fails below 80% threshold
+✅ *Security Scanning*: CodeQL, npm audit automated
+✅ *Performance*: Benchmarks in CI pipeline
+✅ *RSR Verification*: Automated compliance checks
 
-#### PLATINUM Level
-✅ **Multi-CI**: GitHub Actions + GitLab CI
-✅ **Container Support**: Dockerfile, docker-compose.yml
-✅ **Dependency Automation**: Dependabot + Renovate
-✅ **SBOM**: CycloneDX format, attached to releases
-✅ **ADRs**: Architecture Decision Records
-✅ **Release Automation**: Full automated release workflow
-✅ **Code Quality Gates**: CodeClimate + SonarCloud
-✅ **OpenSSF Prepared**: Best Practices checklist complete
-✅ **Supply Chain Security**: SLSA-aware, vulnerability scanning
+==== PLATINUM Level
+✅ *Multi-CI*: GitHub Actions + GitLab CI
+✅ *Container Support*: Dockerfile, docker-compose.yml
+✅ *Dependency Automation*: Dependabot + Renovate
+✅ *SBOM*: CycloneDX format, attached to releases
+✅ *ADRs*: Architecture Decision Records
+✅ *Release Automation*: Full automated release workflow
+✅ *Code Quality Gates*: CodeClimate + SonarCloud
+✅ *OpenSSF Prepared*: Best Practices checklist complete
+✅ *Supply Chain Security*: SLSA-aware, vulnerability scanning
 
-**Overall Score**: 100% (42/42 requirements met)
+*Overall Score*: 100% (42/42 requirements met)
 
 See [RSR-PLATINUM.md](RSR-PLATINUM.md) for detailed compliance report.
 
-### Verify Compliance
+=== Verify Compliance
 
 ```bash
-# Using just (recommended)
+= Using just (recommended)
 just rsr-check
 
-# Using script directly
+= Using script directly
 ./scripts/verify-rsr.sh
 
-# Using Nix
+= Using Nix
 nix flake check
 ```
 
-### TPCF Perimeter 3
+=== TPCF Perimeter 3
 
-This project operates at **Perimeter 3 (Community Sandbox)**:
+This project operates at *Perimeter 3 (Community Sandbox)*:
 - ✅ Fully open contribution via pull requests
 - ✅ Public issue tracking and roadmap
 - ✅ Transparent decision-making
@@ -491,16 +491,16 @@ This project operates at **Perimeter 3 (Community Sandbox)**:
 
 See [MAINTAINERS.md](MAINTAINERS.md) for details.
 
-## License
+== License
 
 Dual licensed under:
 
-1. **MIT License** - see [LICENSE](LICENSE) file
-2. **Palimpsest License v0.8** - see [LICENSE-PALIMPSEST.txt](LICENSE-PALIMPSEST.txt)
+1. *MIT License* - see [LICENSE](LICENSE) file
+2. *Palimpsest License v0.8* - see [LICENSE-PALIMPSEST.txt](LICENSE-PALIMPSEST.txt)
 
 You may choose either license for your use.
 
-## Roadmap
+== Roadmap
 
 - [ ] Async template loading
 - [ ] Streaming support
@@ -511,12 +511,12 @@ You may choose either license for your use.
 - [ ] Macro support
 - [ ] i18n integration
 
-## Support
+== Support
 
 - 📖 [Documentation](https://github.com/Hyperpolymath/v3-templater#readme)
 - 🐛 [Issue Tracker](https://github.com/Hyperpolymath/v3-templater/issues)
 - 💬 [Discussions](https://github.com/Hyperpolymath/v3-templater/discussions)
 
-## Acknowledgments
+== Acknowledgments
 
 Inspired by Jinja2, Liquid, Handlebars, and other great templating engines.

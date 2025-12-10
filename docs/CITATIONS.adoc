@@ -1,0 +1,36 @@
+= v3-templater - Citation Guide
+:toc:
+
+== BibTeX
+
+[source,bibtex]
+----
+@software{v3-templater_2025,
+  author = {Polymath, Hyper},
+  title = {v3-templater},
+  year = {2025},
+  url = {https://github.com/hyperpolymath/v3-templater},
+  license = {AGPL-3.0-or-later}
+}
+----
+
+== Harvard Style
+
+Polymath, H. (2025) _v3-templater_ [Computer software]. Available at: https://github.com/hyperpolymath/v3-templater
+
+== OSCOLA
+
+Hyper Polymath, 'v3-templater' (2025) <https://github.com/hyperpolymath/v3-templater>
+
+== MLA
+
+Polymath, Hyper. "v3-templater." 2025, github.com/hyperpolymath/v3-templater.
+
+== APA 7
+
+Polymath, H. (2025). _v3-templater_ [Computer software]. GitHub. https://github.com/hyperpolymath/v3-templater
+
+== See Also
+
+* link:../CITATION.cff[CITATION.cff]
+* link:../codemeta.json[codemeta.json]
