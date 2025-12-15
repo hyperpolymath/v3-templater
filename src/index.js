@@ -3,11 +3,14 @@
  * This file provides a JavaScript API over the ReScript compiled code
  */
 
-// Import ReScript compiled modules (will be .bs.js files)
+// Import ReScript compiled modules (will be .bs.js files after compilation)
 // Note: These imports will work after ReScript compilation
 import * as TypesModule from './Types.bs.js';
 import * as LexerModule from './Lexer.bs.js';
+import * as ParserModule from './Parser.bs.js';
+import * as CompilerModule from './Compiler.bs.js';
 import * as RuntimeModule from './Runtime.bs.js';
+import * as FiltersModule from './Filters.bs.js';
 import * as CacheModule from './Cache.bs.js';
 import * as EscapeModule from './utils/Escape.bs.js';
 
@@ -29,103 +32,128 @@ export class Template {
     // Initialize cache if enabled
     this.cacheState = this.options.cache ? CacheModule.make(100) : null;
 
-    // Store custom filters and helpers
-    this.customFilters = { ...this.options.filters };
-    this.customHelpers = { ...this.options.helpers };
+    // Merge custom filters with built-in filters
+    this.filters = FiltersModule.mergeFilters(this.options.filters);
+    this.helpers = { ...this.options.helpers };
+
+    // Compiler options
+    this.compilerOptions = {
+      autoEscape: this.options.autoEscape,
+      strictMode: this.options.strictMode,
+      filters: this.filters,
+      helpers: this.helpers,
+    };
   }
 
   /**
-   * Compile a template string
+   * Compile a template string into a reusable render function
+   * @param {string} templateString - The template to compile
+   * @returns {{ render: (context: object) => string, source: string }}
    */
   compile(templateString) {
     // Check cache first
     if (this.cacheState) {
       const cached = CacheModule.get(this.cacheState, templateString);
       if (cached) {
-        return {
-          render: (context) => this.render(templateString, context),
-        };
+        return cached;
       }
     }
 
-    // Create lexer with configured delimiters
-    const delimiterConfig = {
+    // Convert delimiters for ReScript
+    const delimiterConfig = this.options.delimiters ? {
       start: this.options.delimiters.start,
       end_: this.options.delimiters.end,
-    };
-    const lexer = LexerModule.make(templateString, delimiterConfig);
+    } : undefined;
 
-    // Tokenize the template
-    const tokens = LexerModule.tokenize(lexer);
+    // Compile template using ReScript compiler
+    const compiled = CompilerModule.compile(
+      templateString,
+      this.compilerOptions,
+      delimiterConfig
+    );
 
-    // For now, return a compiled template object
-    // In a full implementation, we'd parse and compile the tokens
-    const compiled = {
-      render: (context) => this.render(templateString, context),
+    // Wrap the render function for easier use
+    const result = {
+      render: (context = {}) => {
+        return compiled.render(context);
+      },
       source: templateString,
-      tokens: tokens,
     };
 
     // Cache if enabled
     if (this.cacheState) {
-      CacheModule.set(this.cacheState, templateString, compiled);
+      CacheModule.set(this.cacheState, templateString, result);
     }
 
-    return compiled;
+    return result;
   }
 
   /**
-   * Render a template string with context
+   * Render a template string with context directly
+   * @param {string} templateString - The template to render
+   * @param {object} context - Data to pass to the template
+   * @returns {string}
    */
   render(templateString, context = {}) {
-    // Simple rendering implementation
-    // This is a minimal version - full implementation would use parser & compiler
-
-    let output = templateString;
-
-    // Handle variable substitution {{ variable }}
-    const varRegex = new RegExp(
-      `${this.escapeRegex(this.options.delimiters.start)}\\s*([^}]+?)\\s*${this.escapeRegex(this.options.delimiters.end)}`,
-      'g'
-    );
-
-    output = output.replace(varRegex, (match, varName) => {
-      // Get value from context
-      const value = this.getContextValue(varName.trim(), context);
-
-      // Convert to string
-      const strValue = this.valueToString(value);
-
-      // Escape if needed
-      if (this.options.autoEscape) {
-        return EscapeModule.escapeHtml(strValue);
-      }
-      return strValue;
-    });
-
-    return output;
+    const compiled = this.compile(templateString);
+    return compiled.render(context);
   }
 
   /**
-   * Render a template file
+   * Render a template file (sync version - Node.js only)
+   * @param {string} filePath - Path to the template file
+   * @param {object} context - Data to pass to the template
+   * @returns {string}
+   */
+  renderFileSync(filePath, context = {}) {
+    // For Node.js environments
+    if (typeof require !== 'undefined') {
+      const fs = require('fs');
+      const content = fs.readFileSync(filePath, 'utf8');
+      return this.render(content, context);
+    }
+    throw new Error('renderFileSync requires Node.js. Use renderFile for async file reading.');
+  }
+
+  /**
+   * Render a template file (async version)
+   * @param {string} filePath - Path to the template file
+   * @param {object} context - Data to pass to the template
+   * @returns {Promise<string>}
    */
   async renderFile(filePath, context = {}) {
-    const content = await Deno.readTextFile(filePath);
-    return this.render(content, context);
+    // Deno environment
+    if (typeof Deno !== 'undefined') {
+      const content = await Deno.readTextFile(filePath);
+      return this.render(content, context);
+    }
+    // Node.js environment
+    if (typeof require !== 'undefined') {
+      const fs = require('fs').promises;
+      const content = await fs.readFile(filePath, 'utf8');
+      return this.render(content, context);
+    }
+    throw new Error('renderFile requires Deno or Node.js runtime.');
   }
 
   /**
    * Add a custom filter
+   * @param {string} name - Filter name
+   * @param {Function} fn - Filter function (value, ...args) => result
    */
   addFilter(name, fn) {
-    this.customFilters[name] = fn;
+    this.filters[name] = fn;
+    this.compilerOptions.filters = this.filters;
   }
 
   /**
-   * Add a custom helper
+   * Add a custom helper function
+   * @param {string} name - Helper name
+   * @param {Function} fn - Helper function (...args) => result
    */
   addHelper(name, fn) {
-    this.customHelpers[name] = fn;
+    this.helpers[name] = fn;
+    this.compilerOptions.helpers = this.helpers;
   }
 
   /**
@@ -137,65 +165,189 @@ export class Template {
     }
   }
 
-  // Helper methods
-
-  getContextValue(path, context) {
-    const parts = path.split('.');
-    let value = context;
-
-    for (const part of parts) {
-      if (value == null) return null;
-      value = value[part];
+  /**
+   * Get cache statistics
+   * @returns {{ size: number, maxSize: number }}
+   */
+  getCacheStats() {
+    if (this.cacheState) {
+      return {
+        size: CacheModule.size(this.cacheState),
+        maxSize: 100,
+      };
     }
-
-    return value ?? null;
-  }
-
-  valueToString(value) {
-    if (value == null) return '';
-    if (typeof value === 'string') return value;
-    if (typeof value === 'number') return String(value);
-    if (typeof value === 'boolean') return String(value);
-    if (typeof value === 'object') return JSON.stringify(value);
-    return String(value);
-  }
-
-  escapeRegex(str) {
-    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return { size: 0, maxSize: 0 };
   }
 }
 
 /**
  * Async Template Engine
- * Same as Template but with async file operations
+ * Optimized for async file operations and batch preloading
  */
 export class AsyncTemplate extends Template {
-  async renderFile(filePath, context = {}) {
-    const content = await Deno.readTextFile(filePath);
-    return this.render(content, context);
+  constructor(options = {}) {
+    super(options);
+    this.preloadedTemplates = new Map();
   }
 
+  /**
+   * Preload multiple templates for faster rendering
+   * @param {string[]} filePaths - Array of file paths to preload
+   * @returns {Promise<void>}
+   */
   async preload(filePaths) {
     const promises = filePaths.map(async (path) => {
-      const content = await Deno.readTextFile(path);
-      this.compile(content);
+      // Deno environment
+      if (typeof Deno !== 'undefined') {
+        const content = await Deno.readTextFile(path);
+        this.preloadedTemplates.set(path, this.compile(content));
+        return;
+      }
+      // Node.js environment
+      if (typeof require !== 'undefined') {
+        const fs = require('fs').promises;
+        const content = await fs.readFile(path, 'utf8');
+        this.preloadedTemplates.set(path, this.compile(content));
+        return;
+      }
     });
     await Promise.all(promises);
   }
+
+  /**
+   * Render a preloaded template
+   * @param {string} filePath - Path used during preload
+   * @param {object} context - Data to pass to the template
+   * @returns {string}
+   */
+  renderPreloaded(filePath, context = {}) {
+    const compiled = this.preloadedTemplates.get(filePath);
+    if (!compiled) {
+      throw new Error(`Template not preloaded: ${filePath}`);
+    }
+    return compiled.render(context);
+  }
+
+  /**
+   * Check if a template is preloaded
+   * @param {string} filePath - Path to check
+   * @returns {boolean}
+   */
+  isPreloaded(filePath) {
+    return this.preloadedTemplates.has(filePath);
+  }
+
+  /**
+   * Clear preloaded templates
+   */
+  clearPreloaded() {
+    this.preloadedTemplates.clear();
+  }
 }
 
-// Export utility functions
-export { EscapeModule as Escape };
-export { RuntimeModule as Runtime };
-export { LexerModule as Lexer };
-export { CacheModule as Cache };
+/**
+ * SafeString class for marking content as safe (no escaping)
+ */
+export class SafeString {
+  constructor(value) {
+    this.value = String(value);
+    this.__safe = true;
+  }
+
+  toString() {
+    return this.value;
+  }
+
+  valueOf() {
+    return this.value;
+  }
+}
+
+/**
+ * Mark a string as safe (no HTML escaping)
+ * @param {string} value - Value to mark as safe
+ * @returns {SafeString}
+ */
+export function markSafe(value) {
+  return new SafeString(value);
+}
+
+/**
+ * Escape HTML entities in a string
+ * @param {string} str - String to escape
+ * @returns {string}
+ */
+export function escapeHtml(str) {
+  return EscapeModule.escapeHtml(String(str));
+}
+
+/**
+ * Create a template with default options
+ * Convenience function for quick usage
+ * @param {string} templateString - Template to compile
+ * @param {object} context - Data for rendering
+ * @returns {string}
+ */
+export function render(templateString, context = {}) {
+  const template = new Template();
+  return template.render(templateString, context);
+}
+
+/**
+ * Compile a template with default options
+ * @param {string} templateString - Template to compile
+ * @returns {{ render: (context: object) => string }}
+ */
+export function compile(templateString) {
+  const template = new Template();
+  return template.compile(templateString);
+}
+
+// Export utility modules for advanced usage
+export const Escape = EscapeModule;
+export const Runtime = RuntimeModule;
+export const Lexer = LexerModule;
+export const Parser = ParserModule;
+export const Compiler = CompilerModule;
+export const Filters = FiltersModule;
+export const Cache = CacheModule;
+export const Types = TypesModule;
+
+// Export built-in filter names for reference
+export const builtInFilters = [
+  // String filters
+  'upper', 'lower', 'capitalize', 'title', 'trim', 'ltrim', 'rtrim',
+  'truncate', 'wordwrap', 'center', 'pad', 'replace', 'replaceAll',
+  'split', 'striptags', 'nl2br', 'urlEncode', 'urlDecode',
+  // Array filters
+  'length', 'first', 'last', 'reverse', 'join', 'sort', 'sortBy',
+  'unique', 'slice', 'batch', 'map', 'reject', 'select', 'groupBy',
+  // Number filters
+  'abs', 'round', 'floor', 'ceil', 'fixed', 'formatNumber',
+  // Utility filters
+  'default', 'safe', 'escape', 'e', 'json', 'keys', 'values',
+  'entries', 'typeOf', 'wordcount',
+  // Date filters
+  'date',
+];
 
 // Default export
 export default {
   Template,
   AsyncTemplate,
+  SafeString,
+  markSafe,
+  escapeHtml,
+  render,
+  compile,
+  builtInFilters,
+  // Internal modules
   Escape: EscapeModule,
   Runtime: RuntimeModule,
   Lexer: LexerModule,
+  Parser: ParserModule,
+  Compiler: CompilerModule,
+  Filters: FiltersModule,
   Cache: CacheModule,
+  Types: TypesModule,
 };
