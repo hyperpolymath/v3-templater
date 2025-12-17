@@ -37,7 +37,7 @@
     "type-safe"
   ],
   "author": "v3-templater contributors",
-  "license": "MIT",
+  "license": "MIT OR AGPL-3.0-or-later",
   "devDependencies": {
     "@types/node": "^20.19.27",
     "@types/jest": "^29.5.14",
@@ -48,9 +48,6 @@
     "ts-jest": "^29.4.6",
     "typescript": "^5.9.3",
     "prettier": "^3.7.4"
-  },
-  "dependencies": {
-    "he": "^1.2.0"
   },
   "dependencies": {},
   "repository": {
@@ -68,6 +65,6 @@
     "deno.json",
     "import_map.json",
     "README.md",
-    "LICENSE"
+    "LICENSE.txt"
   ]
 }

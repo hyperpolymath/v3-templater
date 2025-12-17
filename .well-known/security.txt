@@ -3,7 +3,7 @@
 
 Contact: mailto:security@hyperpolymath.dev
 Contact: https://github.com/Hyperpolymath/v3-templater/security/advisories/new
-Expires: 2025-12-31T23:59:59.000Z
+Expires: 2026-12-31T23:59:59.000Z
 Preferred-Languages: en
 Canonical: https://hyperpolymath.dev/.well-known/security.txt
 

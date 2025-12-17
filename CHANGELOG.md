@@ -159,26 +159,48 @@ Inspired by and learning from:
 
 ## [Unreleased]
 
-### Planned for v1.1.0
+### Completed Migration
+- [x] ReScript migration from TypeScript
+- [x] Deno runtime support
+- [x] Security.txt RFC 9116 compliance
+- [x] OSSF Scorecard integration
+- [x] CodeQL security scanning
+- [x] Dependabot automated updates
+
+### Planned for v1.1.0 (Q1 2026)
 - [ ] Async filter support
-- [ ] Browser build (UMD/ESM)
-- [ ] Streaming rendering
-- [ ] More date formatting options
+- [ ] Browser build (UMD/ESM via esbuild)
+- [ ] Streaming rendering for large templates
+- [ ] Enhanced date formatting (Intl.DateTimeFormat)
 - [ ] i18n integration helpers
+- [ ] Configurable execution limits (DoS protection)
 
-### Planned for v1.2.0
-- [ ] Macro support
-- [ ] Template debugging tools
-- [ ] Source map improvements
-- [ ] Performance optimizations
-- [ ] Additional built-in filters
+### Planned for v1.2.0 (Q2 2026)
+- [ ] Macro support for reusable template fragments
+- [ ] Template debugging tools with source maps
+- [ ] Worker thread isolation for filter sandboxing
+- [ ] Performance optimizations (AST caching)
+- [ ] Additional built-in filters (markdown, currency)
 
-### Planned for v1.3.0
-- [ ] Template linting
-- [ ] Auto-completion support for IDEs
-- [ ] Visual template editor
-- [ ] Template dependency analysis
-- [ ] Hot reloading support
+### Planned for v1.3.0 (Q3 2026)
+- [ ] Template linting CLI tool
+- [ ] LSP (Language Server Protocol) for IDE support
+- [ ] Visual template editor (web-based)
+- [ ] Template dependency analysis and tree-shaking
+- [ ] Hot reloading support for development
+
+### Planned for v2.0.0 (Q4 2026)
+- [ ] Complete ReScript-first API
+- [ ] WASM compilation target
+- [ ] Edge runtime support (Cloudflare Workers, Deno Deploy)
+- [ ] Template precompilation for zero-runtime overhead
+- [ ] Plugin marketplace/registry
+
+### Security Roadmap
+- [ ] Third-party security audit (Q2 2026)
+- [ ] SLSA Level 3 compliance
+- [ ] Signed releases with Sigstore
+- [ ] Supply chain security attestations
 
 ---
 
