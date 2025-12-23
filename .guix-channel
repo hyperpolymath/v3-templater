@@ -1,7 +1,0 @@
-;; v3-templater - Guix Channel
-;; Add to ~/.config/guix/channels.scm
-
-(channel
- (version 0)
- (url "https://github.com/hyperpolymath/v3-templater")
- (branch "main"))
