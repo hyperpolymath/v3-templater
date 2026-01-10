@@ -511,7 +511,7 @@ See [MAINTAINERS.md](MAINTAINERS.md) for details.
 
 Dual licensed under:
 
-1. *MIT License* - see [LICENSE](LICENSE) file
+1. *Palimpsest-MPL-1.0 License* - see [LICENSE](LICENSE) file
 2. *Palimpsest License v0.8* - see [LICENSE-PALIMPSEST.txt](LICENSE-PALIMPSEST.txt)
 
 You may choose either license for your use.
