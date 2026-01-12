@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: PMPL-1.0
 name: CI/CD
 
 on:
@@ -194,7 +195,7 @@ jobs:
       run: npx @cyclonedx/cyclonedx-npm --output-file sbom.json
 
     - name: Upload SBOM
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: sbom
         path: sbom.json

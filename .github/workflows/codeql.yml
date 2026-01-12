@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: PMPL-1.0
 # For most projects, this workflow file will not need changing; you simply need
 # to commit it to your repository.
 #
@@ -43,7 +44,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        - language: actions
+        - language: javascript-typescript
           build-mode: none
         - language: javascript-typescript
           build-mode: none
