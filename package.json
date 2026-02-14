@@ -47,7 +47,7 @@
     "jest": "^29.7.0",
     "ts-jest": "^29.4.6",
     "typescript": "^5.9.3",
-    "prettier": "^3.7.4"
+    "prettier": "^3.8.1"
   },
   "dependencies": {
     "he": "^1.2.0"
