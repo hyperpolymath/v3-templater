@@ -535,3 +535,8 @@ You may choose either license for your use.
 == Acknowledgments
 
 Inspired by Jinja2, Liquid, Handlebars, and other great templating engines.
+
+
+== Architecture
+
+See link:TOPOLOGY.md[TOPOLOGY.md] for a visual architecture map and completion dashboard.
