@@ -36,8 +36,8 @@
     "functional",
     "type-safe"
   ],
-  "author": "v3-templater contributors",
-  "license": "MIT",
+  "author": "Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>",
+  "license": "PMPL-1.0-or-later",
   "devDependencies": {
     "@types/node": "^20.19.37",
     "@types/jest": "^29.5.14",

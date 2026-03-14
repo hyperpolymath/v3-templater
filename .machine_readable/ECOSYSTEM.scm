@@ -5,16 +5,21 @@
 (ecosystem
   (version "1.0")
   (name "v3-templater")
-  (type "")
-  (purpose "")
+  (type "library")
+  (purpose "Secure, high-performance templating engine built with ReScript and Deno")
 
   (position-in-ecosystem
-    (category "")
-    (subcategory "")
-    (unique-value ()))
+    (category "developer-tools")
+    (subcategory "templating")
+    (unique-value "Type-safe templating with ReScript compilation and Deno runtime"))
 
-  (related-projects ())
+  (related-projects
+    ((name . "preference-injector")
+     (relationship . "sibling-standard")
+     (nature . "Configuration injection, complementary to template rendering")))
 
-  (what-this-is ())
+  (what-this-is
+    "A modern templating engine supporting Mustache/Handlebars/EJS syntax with auto-escaping, filter chains, template inheritance, and LRU caching.")
 
-  (what-this-is-not ()))
+  (what-this-is-not
+    "Not a full frontend framework. Not a static site generator. Not a replacement for React/Vue rendering."))
