@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: PMPL-1.0-or-later
+# Clade declaration — part of the gv-clade-index registry
+# See: https://github.com/hyperpolymath/gv-clade-index
+
+[identity]
+uuid = "e1db84dc-2090-544d-ab6c-2396096bddf9"
+primary-forge = "github"
+primary-owner = "hyperpolymath"
+canonical-name = "v3-templater"
+prefixed-name = "rm-v3-templater"
+
+[clade]
+primary = "rm"
+secondary = []
+assigned = "2026-03-16"
+rationale = ""
+
+[forges]
+github = "hyperpolymath/v3-templater"
+gitlab = "hyperpolymath/v3-templater"
+bitbucket = "hyperpolymath/v3-templater"
+
+[lineage]
+type = "standalone"
+parent = "V3 template generation tool"
+born = "2026-03-16"
