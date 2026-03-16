@@ -25,10 +25,10 @@ jobs:
         node-version: [14.x, 16.x, 18.x, 20.x]
 
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v6
+      uses: actions/setup-node@49933ea5288caeca8642195f2b846b8bbe245a93 # v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
@@ -68,10 +68,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
     - name: Use Node.js
-      uses: actions/setup-node@v6
+      uses: actions/setup-node@49933ea5288caeca8642195f2b846b8bbe245a93 # v4
       with:
         node-version: '20.x'
         cache: 'npm'
@@ -94,10 +94,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
     - name: Use Node.js
-      uses: actions/setup-node@v6
+      uses: actions/setup-node@49933ea5288caeca8642195f2b846b8bbe245a93 # v4
       with:
         node-version: '20.x'
         cache: 'npm'
@@ -117,7 +117,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
     - name: Make script executable
       run: chmod +x scripts/verify-rsr.sh
@@ -140,10 +140,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
     - name: Use Node.js
-      uses: actions/setup-node@v6
+      uses: actions/setup-node@49933ea5288caeca8642195f2b846b8bbe245a93 # v4
       with:
         node-version: '20.x'
 
@@ -154,12 +154,12 @@ jobs:
       run: npm audit --audit-level=moderate || true
 
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v4
+      uses: github/codeql-action/init@6624720a57d4c312633c7b953db2f2da5bcb4c3a # v3
       with:
         languages: javascript
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v4
+      uses: github/codeql-action/analyze@6624720a57d4c312633c7b953db2f2da5bcb4c3a # v3
 
   # Dependency review (PR only)
   dependency-review:
@@ -168,7 +168,7 @@ jobs:
     if: github.event_name == 'pull_request'
 
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
     - name: Dependency Review
       uses: actions/dependency-review-action@v4
@@ -181,10 +181,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
     - name: Use Node.js
-      uses: actions/setup-node@v6
+      uses: actions/setup-node@49933ea5288caeca8642195f2b846b8bbe245a93 # v4
       with:
         node-version: '20.x'
 
