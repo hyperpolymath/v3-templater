@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: PMPL-1.0-or-later
 /**
  * Template caching mechanism (ReScript)
  * LRU (Least Recently Used) cache implementation

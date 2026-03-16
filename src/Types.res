@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: PMPL-1.0-or-later
 /**
  * v3-templater — Core Type Definitions (ReScript).
  *

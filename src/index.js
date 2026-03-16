@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: PMPL-1.0-or-later
 /**
  * v3-templater - JavaScript/Deno interop layer
  * This file provides a JavaScript API over the ReScript compiled code
