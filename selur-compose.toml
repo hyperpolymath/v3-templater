@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: PMPL-1.0-or-later
+# Copyright (c) 2026 Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk>
+#
+# Stapeln selur-compose.toml — v3-templater
+# CLI templating engine (no exposed ports)
+
+[project]
+name = "v3-templater"
+
+[services.app]
+build = { context = ".", dockerfile = "Containerfile" }
+restart = "no"
+networks = ["default"]
+
+healthcheck = { test = "node dist/cli.js --version || exit 1", interval = "30s", timeout = "3s", start_period = "5s", retries = 3 }
+
+[services.app.labels]
+"org.opencontainers.image.title" = "v3-templater"
+"org.opencontainers.image.description" = "Modern, secure templating engine"
+
+[networks.default]
+driver = "bridge"
