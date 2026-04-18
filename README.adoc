@@ -453,10 +453,10 @@ v3-templater achieves *PLATINUM level* compliance with the [Rhodium Standard Rep
 
 ==== Silver Level
 ✅ *.well-known/*: security.txt, ai.txt, humans.txt
-✅ *Build System*: npm scripts + justfile + flake.nix
+✅ *Build System*: npm scripts + Justfile + flake.nix
 ✅ *CI/CD*: GitHub Actions with comprehensive testing
 ✅ *Tests*: 5 test suites, 80%+ coverage enforced
-✅ *Automation*: justfile with 25+ recipes
+✅ *Automation*: Justfile with 25+ recipes
 
 ==== Gold Level
 ✅ *Nix Flakes*: Reproducible builds with flake.nix

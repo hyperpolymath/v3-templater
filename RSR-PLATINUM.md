@@ -23,7 +23,7 @@ v3-templater has achieved **PLATINUM level** RSR compliance - exceeding GOLD req
 - ✅ All Bronze requirements
 - ✅ .well-known/ai.txt (AI training policy)
 - ✅ .well-known/humans.txt (attribution)
-- ✅ justfile with 25+ automation recipes
+- ✅ Justfile with 25+ automation recipes
 - ✅ Dual licensing (MIT + Palimpsest v0.8)
 - ✅ RSR self-verification script
 - ✅ Comprehensive documentation (7+ docs)
@@ -84,7 +84,7 @@ v3-templater has achieved **PLATINUM level** RSR compliance - exceeding GOLD req
 | RSR Verification | Automated | ✅ | CI checks |
 | **Build Systems** | ||||
 | npm | ✅ | package.json, npm scripts |
-| just | ✅ | justfile (25+ recipes) |
+| just | ✅ | Justfile (25+ recipes) |
 | Nix | ✅ | flake.nix (reproducible) |
 | Docker | ✅ | Dockerfile, compose |
 | **Licensing** | ||||
@@ -231,7 +231,7 @@ v3-templater has achieved **PLATINUM level** RSR compliance - exceeding GOLD req
 18. .dockerignore
 
 ### Build Systems (2 files)
-19. justfile
+19. Justfile
 20. flake.nix
 
 ### Code Quality (2 files)

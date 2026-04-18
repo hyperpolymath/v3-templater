@@ -22,7 +22,7 @@ v3-templater has achieved **SILVER level compliance** with the Rhodium Standard 
 | **7. Code of Conduct** | Contributor Covenant 2.1 | ✅ PASS | CODE_OF_CONDUCT.md |
 | **8. Maintainers** | TPCF Perimeter declared | ✅ PASS | MAINTAINERS.md |
 | **9. .well-known/** | security.txt, ai.txt, humans.txt | ✅ PASS | All 3 files present |
-| **10. Build System** | npm + justfile + flake.nix | ✅ PASS | 3 build systems |
+| **10. Build System** | npm + Justfile + flake.nix | ✅ PASS | 3 build systems |
 | **11. CI/CD** | GitHub Actions configured | ✅ PASS | .github/workflows/ci.yml |
 | **12. Tests** | 5 test suites, 80%+ target | ✅ PASS | Jest configured |
 | **13. Dependencies** | Minimal (1 production dep) | ✅ PASS | package.json |
@@ -42,7 +42,7 @@ v3-templater has achieved **SILVER level compliance** with the Rhodium Standard 
 - [x] All Bronze requirements
 - [x] .well-known/ai.txt (AI training policy)
 - [x] .well-known/humans.txt (attribution)
-- [x] justfile with 25+ recipes
+- [x] Justfile with 25+ recipes
 - [x] Dual licensing (MIT + Palimpsest v0.8)
 - [x] RSR self-verification script
 - [x] Comprehensive documentation (7 docs)
