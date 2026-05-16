@@ -10,6 +10,12 @@ Thumbs.db
 .idea/
 .vscode/
 
+# Agent & editor scaffolding (standards#68) — local-only, never committed
+# estate-wide. Owner decision 2026-05-16: gitignore both rather than commit
+# per-repo agent/editor config.
+.editorconfig
+.claude/
+
 # Build
 /target/
 /_build/
@@ -22,6 +28,10 @@ Thumbs.db
 /vendor/
 /deps/
 /.elixir_ls/
+# npm-avoidant (standards#67): estate JS-runtime policy is Deno>Bun>pnpm>npm.
+# npm lockfiles must never be committed estate-wide.
+package-lock.json
+**/package-lock.json
 
 # Rust
 # Cargo.lock  # Keep for binaries
