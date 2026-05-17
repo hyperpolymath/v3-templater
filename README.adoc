@@ -504,7 +504,7 @@ This project operates at *Perimeter 3 (Community Sandbox)*:
 - ✅ Transparent decision-making
 - ✅ Merit-based advancement to maintainer
 
-See [MAINTAINERS.md](MAINTAINERS.md) for details.
+See [MAINTAINERS.md](MAINTAINERS.adoc) for details.
 
 == License
 
