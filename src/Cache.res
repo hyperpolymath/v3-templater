@@ -7,7 +7,7 @@
 open Types
 
 type cacheState = {
-  cache: Js.Dict.t<compiledTemplate>,
+  cache: Dict.t<compiledTemplate>,
   mutable accessOrder: array<string>,
   maxSize: int,
 }
@@ -15,7 +15,7 @@ type cacheState = {
 // Create a new cache
 let make = (~maxSize: int=100, ()): cacheState => {
   {
-    cache: Js.Dict.empty(),
+    cache: Dict.empty(),
     accessOrder: [],
     maxSize: maxSize,
   }
@@ -24,14 +24,14 @@ let make = (~maxSize: int=100, ()): cacheState => {
 // Update access order for LRU
 let updateAccessOrder = (state: cacheState, key: string): unit => {
   // Remove key if it exists
-  let filtered = Js.Array.filter(k => k != key, state.accessOrder)
+  let filtered = state.accessOrder->Array.filter(k => k != key)
   // Add key to end (most recently used)
-  state.accessOrder = Js.Array.concat([key], filtered)
+  state.accessOrder = Array.concat(filtered, [key])
 }
 
 // Get a cached template
 let get = (state: cacheState, key: string): option<compiledTemplate> => {
-  switch Js.Dict.get(state.cache, key) {
+  switch Dict.get(state.cache, key) {
   | Some(template) =>
     updateAccessOrder(state, key)
     Some(template)
@@ -41,31 +41,31 @@ let get = (state: cacheState, key: string): option<compiledTemplate> => {
 
 // Set a template in cache
 let set = (state: cacheState, key: string, template: compiledTemplate): unit => {
-  let hasKey = switch Js.Dict.get(state.cache, key) {
+  let hasKey = switch Dict.get(state.cache, key) {
   | Some(_) => true
   | None => false
   }
 
   // Check if we need to evict
-  let cacheSize = Js.Array.length(Js.Dict.keys(state.cache))
+  let cacheSize = Array.length(Dict.keys(state.cache))
   if cacheSize >= state.maxSize && !hasKey {
     // Evict least recently used (first in access order)
     switch state.accessOrder[0] {
     | Some(lruKey) =>
-      Js.Dict.unsafeDeleteKey(state.cache, lruKey)
-      state.accessOrder = Js.Array.sliceFrom(1, state.accessOrder)
+      Dict.unsafeDeleteKey(state.cache, lruKey)
+      state.accessOrder = Array.sliceFrom(state.accessOrder, 1)
     | None => ()
     }
   }
 
   // Set the template
-  Js.Dict.set(state.cache, key, template)
+  Dict.set(state.cache, key, template)
   updateAccessOrder(state, key)
 }
 
 // Check if cache has a key
 let has = (state: cacheState, key: string): bool => {
-  switch Js.Dict.get(state.cache, key) {
+  switch Dict.get(state.cache, key) {
   | Some(_) => true
   | None => false
   }
@@ -73,17 +73,17 @@ let has = (state: cacheState, key: string): bool => {
 
 // Clear the cache
 let clear = (state: cacheState): unit => {
-  let keys = Js.Dict.keys(state.cache)
-  Js.Array.forEach(key => Js.Dict.unsafeDeleteKey(state.cache, key), keys)
+  let keys = Dict.keys(state.cache)
+  keys->Array.forEach(key => Dict.unsafeDeleteKey(state.cache, key))
   state.accessOrder = []
 }
 
 // Get cache size
 let size = (state: cacheState): int => {
-  Js.Array.length(Js.Dict.keys(state.cache))
+  Array.length(Dict.keys(state.cache))
 }
 
 // Get all keys (for debugging)
 let keys = (state: cacheState): array<string> => {
-  Js.Dict.keys(state.cache)
+  Dict.keys(state.cache)
 }

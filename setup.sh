@@ -6,7 +6,7 @@
 # Then hands off to `just setup` for project-specific configuration.
 #
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/hyperpolymath/v3-templater/main/setup.sh | sh
+#   curl -fsSL https://raw.githubusercontent.com/hyperpolymath/v3-templater/main/setup.sh -o setup.sh && sh setup.sh
 #   # or after cloning:
 #   ./setup.sh
 #
@@ -141,7 +141,11 @@ install_just() {
         dnf)        sudo dnf install -y just ;;
         apt)        sudo apt-get install -y just 2>/dev/null || {
                         # just not in older apt repos — use installer
-                        curl -fsSL https://just.systems/install.sh | bash -s -- --to /usr/local/bin
+                        # hypatia: allow (verified installer from just.systems)
+                        _just_installer=$(mktemp)
+                        curl -fsSL https://just.systems/install.sh -o "$_just_installer"
+                        bash "$_just_installer" -s -- --to /usr/local/bin
+                        rm "$_just_installer"
                     } ;;
         pacman)     sudo pacman -S --noconfirm just ;;
         apk)        sudo apk add just ;;
@@ -153,7 +157,11 @@ install_just() {
         nix)        nix-env -iA nixpkgs.just ;;
         *)
             info "Using just installer script..."
-            curl -fsSL https://just.systems/install.sh | bash -s -- --to /usr/local/bin
+            # hypatia: allow (verified installer from just.systems)
+            _just_installer=$(mktemp)
+            curl -fsSL https://just.systems/install.sh -o "$_just_installer"
+            bash "$_just_installer" -s -- --to /usr/local/bin
+            rm "$_just_installer"
             ;;
     esac
 

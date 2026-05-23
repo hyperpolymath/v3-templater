@@ -8,7 +8,7 @@
  */
 
 // ENTITY MAP: The authoritative set of character-to-entity replacements.
-let htmlEntities = Js.Dict.fromArray([
+let htmlEntities = Dict.fromArray([
   ("&", "&amp;"),
   ("<", "&lt;"),
   (">", "&gt;"),

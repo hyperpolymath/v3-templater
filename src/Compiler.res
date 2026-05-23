@@ -37,7 +37,7 @@ let escapeHtml = (str: string): string => {
 let applyFilter = (
   value: Js.Json.t,
   filter: filterCall,
-  filters: Js.Dict.t<filterFunction>,
+  filters: Dict.t<filterFunction>,
 ): Js.Json.t => {
   // ... [Filter logic implementation]
 }
