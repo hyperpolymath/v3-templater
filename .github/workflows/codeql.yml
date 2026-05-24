@@ -7,8 +7,7 @@ on:
   pull_request:
     branches: [main, master]
   schedule:
-    - cron: '0 6 * * 1'
-
+    - cron: "0 6 * * 1"
 # Estate guardrail: cancel superseded runs so re-pushes don't pile up
 # queued runs across the estate. Safe here because this workflow only
 # performs read-only checks/lint/test/scan with no publish or mutation.
@@ -59,18 +58,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: ${{ fromJson(needs.detect.outputs.langs) }}
+        language: ${{ fromJSON(needs.detect.outputs.langs) }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.2.2
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@c6f931105cb2c34c8f901cc885ba1e2e259cf745 # v3
+        uses: github/codeql-action/init@0d579ffd059c29b07949a3cce3983f0780820c98 # v3.28.1
         with:
           languages: ${{ matrix.language }}
           build-mode: none
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@c6f931105cb2c34c8f901cc885ba1e2e259cf745 # v3
+        uses: github/codeql-action/analyze@0d579ffd059c29b07949a3cce3983f0780820c98 # v3.28.1
         with:
           category: "/language:${{ matrix.language }}"
