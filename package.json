@@ -37,7 +37,7 @@
     "type-safe"
   ],
   "author": "Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>",
-  "license": "PMPL-1.0-or-later",
+  "license": "MPL-2.0",
   "devDependencies": {
     "@types/node": "^20.19.40",
     "@types/jest": "^29.5.14",

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: PMPL-1.0-or-later
+// SPDX-License-Identifier: MPL-2.0
 /**
  * v3-templater — XSS Protection and Escaping (ReScript).
  *
@@ -8,7 +8,7 @@
  */
 
 // ENTITY MAP: The authoritative set of character-to-entity replacements.
-let htmlEntities = Js.Dict.fromArray([
+let htmlEntities = Dict.fromArray([
   ("&", "&amp;"),
   ("<", "&lt;"),
   (">", "&gt;"),

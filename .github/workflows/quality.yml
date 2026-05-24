@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: PMPL-1.0-or-later
+# SPDX-License-Identifier: MPL-2.0
 permissions:
   contents: read
 
@@ -16,7 +16,7 @@ jobs:
           find . -type f -perm /111 -name "*.sh" | head -10 || true
       
       - name: Check for secrets
-        uses: trufflesecurity/trufflehog@7ee2e0fdffec27d19ccbb8fb3dcf8a83b9d7f9e8 # main
+        uses: trufflesecurity/trufflehog@05cccb53bc9e13bc6d17997db5a6bcc3df44bf2f # v3.92.3
         with:
           path: ./
           base: ${{ github.event.pull_request.base.sha || github.event.before }}

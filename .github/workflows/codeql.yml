@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: PMPL-1.0-or-later
+# SPDX-License-Identifier: MPL-2.0
 name: CodeQL Security Analysis
 
 on:
@@ -7,7 +7,7 @@ on:
   pull_request:
     branches: [main, master]
   schedule:
-    - cron: '0 6 * * 1'
+    - cron: "0 6 * * 1"
 # Estate guardrail: cancel superseded runs so re-pushes don't pile up
 # queued runs across the estate. Safe here because this workflow only
 # performs read-only checks/lint/test/scan with no publish or mutation.
@@ -59,7 +59,6 @@ jobs:
       fail-fast: false
       matrix:
         language: ${{ fromJSON(needs.detect.outputs.langs) }}
-
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2

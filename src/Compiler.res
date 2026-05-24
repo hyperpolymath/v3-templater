@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: PMPL-1.0-or-later
+// SPDX-License-Identifier: MPL-2.0
 /**
  * v3-templater — High-Performance Template Compiler (ReScript).
  *
@@ -37,7 +37,7 @@ let escapeHtml = (str: string): string => {
 let applyFilter = (
   value: Js.Json.t,
   filter: filterCall,
-  filters: Js.Dict.t<filterFunction>,
+  filters: Dict.t<filterFunction>,
 ): Js.Json.t => {
   // ... [Filter logic implementation]
 }

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: PMPL-1.0-or-later
+// SPDX-License-Identifier: MPL-2.0
 /**
  * v3-templater — Runtime Evaluation Engine (ReScript).
  *
@@ -12,7 +12,7 @@ open Types
  * VARIABLE RESOLUTION: Recursively traverses objects using dot-notation.
  * Example: `user.profile.name` -> extracts `name` from nested dictionaries.
  */
-let rec evaluateVariable = (name: string, context: Js.Dict.t<Js.Json.t>): Js.Json.t => {
+let rec evaluateVariable = (name: string, context: Dict.t<Js.Json.t>): Js.Json.t => {
   // ... [Traversal implementation using split('.') and recursion]
 }
 
