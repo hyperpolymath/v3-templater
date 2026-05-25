@@ -3,9 +3,9 @@ name: Code Quality
 
 on:
   push:
-    branches: [main, develop, deno-migration]
+    branches: [main, develop, deno-migration-final]
   pull_request:
-    branches: [main, develop, deno-migration]
+    branches: [main, develop, deno-migration-final]
 
 permissions:
   contents: read
