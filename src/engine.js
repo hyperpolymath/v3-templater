@@ -140,7 +140,15 @@ const builtInFilters = {
   replace: (v, search, repl) => String(v).split(search).join(repl),
   replaceAll: (v, pat, repl) => String(v).replace(new RegExp(pat, 'g'), repl),
   split: (v, sep = '') => String(v).split(sep),
-  striptags: (v) => String(v).replace(/<[^>]*>/g, ''),
+  striptags: (v) => {
+    let out = String(v);
+    let prev;
+    do {
+      prev = out;
+      out = out.replace(/<[^>]*>/g, '');
+    } while (out !== prev);
+    return out;
+  },
   nl2br: (v) => String(v).replace(/\n/g, '<br/>'),
   urlEncode: (v) => encodeURIComponent(String(v)),
   urlDecode: (v) => decodeURIComponent(String(v)),
