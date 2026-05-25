@@ -1,7 +1,11 @@
 # SPDX-License-Identifier: MPL-2.0
 name: Code Quality
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [main, develop, deno-migration]
+  pull_request:
+    branches: [main, develop, deno-migration]
 
 permissions:
   contents: read
