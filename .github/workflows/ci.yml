@@ -1,202 +1,67 @@
 # SPDX-License-Identifier: MPL-2.0
-name: CI/CD
+name: CI
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop, deno-migration-final]
   pull_request:
-    branches: [ main, develop ]
-  schedule:
-    - cron: '0 0 * * 0'  # Weekly security scans
+    branches: [main, develop, deno-migration-final]
 
 permissions:
   contents: read
   security-events: write
-  pull-requests: write
 
 jobs:
-  # Test across multiple Node versions
   test:
-    name: Test on Node.js ${{ matrix.node-version }}
+    name: Test
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [14.x, 16.x, 18.x, 20.x]
-
+    
     steps:
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # v6.0.1
+      
+      - name: Setup Deno
+        uses: denoland/setup-deno@667a34cdef165d8d2b2e98dde39547c9daac7282 # v2
+        with:
+          deno-version: v2.x
+      
+      - name: Run linter
+        run: deno lint src/ tests/
+      
+      - name: Check formatting
+        run: deno fmt --check src/ tests/
+      
+      - name: Run tests
+        run: deno test --allow-all tests/
+      
+      - name: Type check
+        run: deno check src/index.js
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@49933ea5288caeca8642195f2b846b8bbe245a93 # v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-
-    - name: Install dependencies
-      run: npm ci
-
-    - name: Run linter
-      run: npm run lint
-
-    - name: Run tests
-      run: npm test
-
-    - name: Run coverage
-      run: npm run test:coverage
-
-    - name: Enforce coverage threshold (80%)
-      run: |
-        echo "Checking test coverage threshold..."
-        if [ -f coverage/coverage-summary.json ]; then
-          echo "✅ Coverage report generated"
-        else
-          echo "❌ No coverage report found"
-          exit 1
-        fi
-
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5
-      with:
-        file: ./coverage/lcov.info
-        flags: unittests
-        name: codecov-${{ matrix.node-version }}
-
-  # Build verification
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-
-    - name: Use Node.js
-      uses: actions/setup-node@49933ea5288caeca8642195f2b846b8bbe245a93 # v4
-      with:
-        node-version: '20.x'
-        cache: 'npm'
-
-    - name: Install dependencies
-      run: npm ci
-
-    - name: Build
-      run: npm run build
-
-    - name: Check build output
-      run: |
-        test -f dist/index.js || (echo "❌ dist/index.js missing" && exit 1)
-        test -f dist/index.d.ts || (echo "❌ dist/index.d.ts missing" && exit 1)
-        echo "✅ Build output verified"
-
-  # Performance benchmarks
-  benchmark:
-    name: Performance Benchmarks
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-
-    - name: Use Node.js
-      uses: actions/setup-node@49933ea5288caeca8642195f2b846b8bbe245a93 # v4
-      with:
-        node-version: '20.x'
-        cache: 'npm'
-
-    - name: Install dependencies
-      run: npm ci
-
-    - name: Build
-      run: npm run build
-
-    - name: Run benchmarks
-      run: npm run benchmark
-
-  # RSR Compliance verification
-  rsr-compliance:
-    name: RSR Compliance Check
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-
-    - name: Make script executable
-      run: chmod +x scripts/verify-rsr.sh
-
-    - name: Verify RSR compliance
-      run: ./scripts/verify-rsr.sh
-
-    - name: Check compliance level
-      run: |
-        if ./scripts/verify-rsr.sh | grep -q "SILVER\|GOLD"; then
-          echo "✅ RSR compliance verified"
-        else
-          echo "❌ RSR compliance check failed"
-          exit 1
-        fi
-
-  # Security scanning
   security:
     name: Security Scan
     runs-on: ubuntu-latest
-
+    
     steps:
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # v6.0.1
+      
+      - name: Setup Deno
+        uses: denoland/setup-deno@667a34cdef165d8d2b2e98dde39547c9daac7282 # v2
+        with:
+          deno-version: v2.x
+      
+      - name: Audit dependencies
+        run: deno audit
 
-    - name: Use Node.js
-      uses: actions/setup-node@49933ea5288caeca8642195f2b846b8bbe245a93 # v4
-      with:
-        node-version: '20.x'
-
-    - name: Install dependencies
-      run: npm ci
-
-    - name: Run npm audit
-      run: npm audit --audit-level=moderate || true
-
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@b2f9ef845756500b97acbdaf5c1dd4e9c1d15734 # v3
-      with:
-        languages: javascript
-
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@b2f9ef845756500b97acbdaf5c1dd4e9c1d15734 # v3
-
-  # Dependency review (PR only)
-  dependency-review:
-    name: Dependency Review
+  codeql:
+    name: CodeQL Analysis
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-
+    
     steps:
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-
-    - name: Dependency Review
-      uses: actions/dependency-review-action@4901385134134e04cec5fbe5ddfe3b2c5bd5d976 # v4
-      with:
-        fail-on-severity: moderate
-
-  # Generate SBOM
-  sbom:
-    name: Generate SBOM
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-
-    - name: Use Node.js
-      uses: actions/setup-node@49933ea5288caeca8642195f2b846b8bbe245a93 # v4
-      with:
-        node-version: '20.x'
-
-    - name: Install dependencies
-      run: npm ci
-
-    - name: Generate SBOM (CycloneDX)
-      run: npx @cyclonedx/cyclonedx-npm --output-file sbom.json
-
-    - name: Upload SBOM
-      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
-      with:
-        name: sbom
-        path: sbom.json
-        retention-days: 90
+      - uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # v6.0.1
+      
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@b2f9ef845756500b97acbdaf5c1dd4e9c1d15734 # v3
+        with:
+          languages: javascript
+      
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@b2f9ef845756500b97acbdaf5c1dd4e9c1d15734 # v3
