@@ -196,7 +196,9 @@ const builtInFilters = {
   },
   unique: (v) => Array.isArray(v) ? [...new Set(v)] : v,
   slice: (v, start, end) =>
-    Array.isArray(v) ? v.slice(Number(start), Number(end)) : String(v).slice(Number(start), Number(end)),
+    Array.isArray(v)
+      ? v.slice(Number(start), Number(end))
+      : String(v).slice(Number(start), Number(end)),
   batch: (v, size) => {
     if (!Array.isArray(v)) return [v];
     const n = Number(size);
