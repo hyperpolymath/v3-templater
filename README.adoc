@@ -1,6 +1,9 @@
-= v3-templater
-image:https://img.shields.io/badge/License-PMPL--1.0-blue.svg[License: PMPL-1.0,link="https://github.com/hyperpolymath/palimpsest-license"]
 // SPDX-License-Identifier: MPL-2.0
+// Copyright (c) Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
+= v3-templater
+image:https://img.shields.io/badge/OpenSSF-Best_Practices-green?logo=openssourcesecurity[OpenSSF Best Practices,link="https://www.bestpractices.dev/en/projects/new?repo_url=https://github.com/hyperpolymath/v3-templater"]
+
+image:https://img.shields.io/badge/License-MPL_2.0-blue.svg[License: MPL-2.0,link="https://opensource.org/licenses/MPL-2.0"]
 // SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
 
 A modern, secure, and high-performance templating engine built with ReScript and Deno. Zero TypeScript, zero Node.js.
@@ -508,12 +511,9 @@ See [MAINTAINERS.md](MAINTAINERS.md) for details.
 
 == License
 
-Dual licensed under:
+This project is licensed under the Mozilla Public License, v. 2.0. See the `LICENSE` file for details.
 
-1. *Palimpsest-MPL-1.0 License* - see [LICENSE](LICENSE) file
-2. *Palimpsest License v0.8* - see [LICENSE-PALIMPSEST.txt](LICENSE-PALIMPSEST.txt)
-
-You may choose either license for your use.
+SPDX-License-Identifier: MPL-2.0
 
 == Roadmap
 
