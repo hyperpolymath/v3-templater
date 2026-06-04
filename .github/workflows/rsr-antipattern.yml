@@ -1,9 +1,5 @@
 # SPDX-License-Identifier: MPL-2.0
-# RSR Anti-Pattern CI Check
-# SPDX-License-Identifier: MPL-2.0
-#
-# Enforces: No TypeScript, No Go, No Python (except SaltStack), No npm
-# Allows: JavaScript, Deno, WASM, Rust, OCaml, Haskell, Guile/Scheme
+# RSR Anti-Pattern Check - Uses reusable workflow from standards
 
 name: RSR Anti-Pattern Check
 
@@ -13,118 +9,8 @@ on:
   pull_request:
     branches: [main, master, develop]
 
-
-permissions:
-  contents: read
-
 jobs:
   antipattern-check:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # v6.0.2
+    uses: hyperpolymath/standards/.github/workflows/rsr-antipattern-reusable.yml@main
+    timeout-minutes: 10
 
-      - name: Check for TypeScript
-        run: |
-          python3 << 'PYEOF'
-          import re, sys, pathlib
-
-          # Universal allowlist
-          DIR_NAMES_ALLOWED = {
-              'bindings', 'tests', 'test', 'scripts',
-              'mcp-adapter', 'cli', 'vendor', 'examples', 'ffi',
-              'node_modules', 'benchmarks',
-          }
-
-          def builtin_allowed(p):
-              parts = p.split('/')
-              for s in parts[:-1]:
-                  if s in DIR_NAMES_ALLOWED:
-                      return True
-                  if 'vscode' in s:
-                      return True
-                  if s.startswith('deno-'):
-                      return True
-              return False
-
-          def exemption_patterns():
-              claude_md = pathlib.Path('.claude/CLAUDE.md')
-              if claude_md.exists():
-                  in_table = False
-                  for line in claude_md.read_text(encoding='utf-8').splitlines():
-                      if re.search(r'TypeScript [Ee]xemptions', line):
-                          in_table = True
-                          continue
-                      if in_table and line.startswith(('### ', '## ', '# ')):
-                          break
-                      if in_table and line.startswith('|'):
-                          m = re.match(r'\|\s*`([^`]+)`', line)
-                          if m:
-                              yield m.group(1)
-
-          def exempt(p):
-              for raw in exemption_patterns():
-                  if p == raw.lstrip('./') or p.startswith(raw.lstrip('./') + '/'):
-                      return True
-              return False
-
-          # Find all .ts and .tsx files
-          found = []
-          for ext in ('ts', 'tsx'):
-              for p in pathlib.Path('.').rglob(f'*.{ext}'):
-                  parts = p.parts
-                  if any(part.startswith('.') and part not in ('.', '..') for part in parts):
-                      continue
-                  found.append(p.as_posix().lstrip('./'))
-
-          bad = sorted(f for f in found if not (builtin_allowed(f) or exempt(f)))
-          if bad:
-              print("❌ TypeScript files detected outside the allowlist.\n")
-              for f in bad:
-                  print(f"  {f}")
-              print()
-              print("To resolve, choose one:")
-              print("  (a) migrate the file to JavaScript")
-              print("  (b) move to an allowlisted bridge path")
-              print("  (c) add an entry to the 'TypeScript Exemptions' table in .claude/CLAUDE.md")
-              sys.exit(1)
-          print(f"✅ No TypeScript files outside allowlist ({sum(1 for _ in exemption_patterns())} per-repo exemption(s) parsed).")
-          PYEOF
-
-      - name: Check for Go
-        run: |
-          if find . -name "*.go" | grep -q .; then
-            echo "❌ Go files detected - use Rust/WASM instead"
-            find . -name "*.go"
-            exit 1
-          fi
-          echo "✅ No Go files"
-
-      - name: Check for Python (non-SaltStack)
-        run: |
-          PY_FILES=$(find . -name "*.py" | grep -v salt | grep -v _states | grep -v _modules | grep -v pillar | grep -v venus | grep -v __pycache__ || true)
-          if [ -n "$PY_FILES" ]; then
-            echo "❌ Python files detected - only allowed for SaltStack"
-            echo "$PY_FILES"
-            exit 1
-          fi
-          echo "✅ No non-SaltStack Python files"
-
-      - name: Verify Deno presence (if JavaScript exists)
-        run: |
-          if [ -f "deno.json" ] || [ -f "deno.jsonc" ]; then
-            echo "✅ Deno configuration found"
-          else
-            echo "⚠️ Warning: JavaScript files without deno.json - migration recommended"
-          fi
-
-      - name: Summary
-        run: |
-          echo ""
-          echo "=== RSR Anti-Pattern Check Passed ✅ ==="
-          echo ""
-          echo "Allowed: JavaScript, Deno, WASM, Rust, OCaml, Haskell,"
-          echo "         Guile/Scheme, SaltStack (Python)"
-          echo ""
-          echo "Blocked: TypeScript, Go, npm, Python (non-Salt)"

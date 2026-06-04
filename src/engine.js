@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MPL-2.0
+// Copyright (c) Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
 /**
  * v3-templater — Complete Template Engine (JavaScript)
  *
@@ -112,9 +113,17 @@ const builtInFilters = {
   trim: (v) => String(v).trim(),
   ltrim: (v) => String(v).trimStart(),
   rtrim: (v) => String(v).trimEnd(),
-  truncate: (v, len = 50, suff = '...') => {
+  truncate: (v, len = 5, suff = '...') => {
     const s = String(v);
-    return s.length <= len ? s : s.slice(0, len) + suff;
+    const length = Number(len);
+    const suffix = String(suff);
+    // Truncate to fit within length, accounting for suffix
+    if (s.length + suffix.length <= length) {
+      return s;
+    }
+    // Ensure we don't go negative
+    const maxTextLength = Math.max(0, length - suffix.length);
+    return s.slice(0, maxTextLength) + suffix;
   },
   wordwrap: (v, lineLen = 80) => {
     const words = String(v).split(' ');
@@ -208,7 +217,10 @@ const builtInFilters = {
   safe: (v) => ({ value: String(v), __safe: true }),
   e: (v) => ({ value: String(v), __safe: true }),
   escape: (v) => escapeHtml(String(v)),
-  json: (v) => JSON.stringify(v, null, 2),
+  json: (v) => {
+    const result = JSON.stringify(v, null, 2);
+    return { value: result, __safe: true };
+  },
   keys: (v) => (v && typeof v === 'object') ? Object.keys(v) : [],
   values: (v) => (v && typeof v === 'object') ? Object.values(v) : [],
   entries: (v) => (v && typeof v === 'object') ? Object.entries(v) : [],
@@ -269,11 +281,77 @@ function parseFilters(expr) {
   const base = expr.slice(0, pipeIndex).trim();
   const filterString = expr.slice(pipeIndex + 1).trim();
   const filters = filterString.split('|').map((f) => {
-    const [name, ...args] = f.trim().split(/\s+/).filter((s) => s.length > 0);
+    const trimmed = f.trim();
+    if (trimmed.length === 0) {
+      return { name: '', args: [] };
+    }
+    // Check if filter uses colon syntax (e.g., truncate:10 or truncate:5:"...")
+    const colonIndex = trimmed.indexOf(':');
+    if (colonIndex > 0) {
+      const name = trimmed.slice(0, colonIndex);
+      const argsStr = trimmed.slice(colonIndex + 1).trim();
+      // Parse colon-separated arguments, respecting quoted strings
+      const args = parseColonSeparatedArgs(argsStr);
+      return { name, args };
+    }
+    // Otherwise use whitespace splitting (backward compatible)
+    const [name, ...args] = trimmed.split(/\s+/).filter((s) => s.length > 0);
     return { name, args };
-  });
+  }).filter(f => f.name.length > 0);
 
   return { expression: base, filters };
+}
+
+function parseColonSeparatedArgs(str) {
+  // Parse colon-separated arguments like "10", "5:\"...\"", or "YYYY-MM-DD"
+  const args = [];
+  let current = '';
+  let inDoubleQuotes = false;
+  let inSingleQuotes = false;
+  let escapeNext = false;
+
+  for (let i = 0; i < str.length; i++) {
+    const char = str[i];
+
+    if (escapeNext) {
+      current += char;
+      escapeNext = false;
+      continue;
+    }
+
+    if (char === '\\') {
+      escapeNext = true;
+      continue;
+    }
+
+    if (char === '"' && !inSingleQuotes) {
+      inDoubleQuotes = !inDoubleQuotes;
+      continue;
+    }
+
+    if (char === "'" && !inDoubleQuotes) {
+      inSingleQuotes = !inSingleQuotes;
+      continue;
+    }
+
+    // Only split on colon if not inside quotes
+    if (char === ':' && !inDoubleQuotes && !inSingleQuotes) {
+      if (current.length > 0) {
+        args.push(current);
+        current = '';
+      }
+      continue;
+    }
+
+    current += char;
+  }
+
+  // Push the last argument
+  if (current.length > 0) {
+    args.push(current);
+  }
+
+  return args;
 }
 
 function applyFilter(value, filterName, filterArgs) {
