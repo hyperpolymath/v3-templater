@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: MPL-2.0
 # workflow-linter.yml - Validates GitHub workflows against RSR security standards
 name: Workflow Security Linter
-
 on:
   push:
     paths:
@@ -10,21 +9,17 @@ on:
     paths:
       - '.github/workflows/**'
   workflow_dispatch:
-
 permissions:
   contents: read
-
 jobs:
   lint-workflows:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
       contents: read
-
     steps:
       - name: Checkout
         uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # v6.0.1
-
       - name: Check SPDX Headers
         run: |
           echo "=== Checking SPDX License Headers ==="
@@ -41,7 +36,6 @@ jobs:
             exit 1
           fi
           echo "All workflows have SPDX headers"
-
       - name: Check Permissions Declaration
         run: |
           echo "=== Checking Permissions ==="
@@ -59,7 +53,6 @@ jobs:
             exit 1
           fi
           echo "All workflows have permissions declared"
-
       - name: Check SHA-Pinned Actions
         run: |
           echo "=== Checking Action Pinning ==="
@@ -78,7 +71,6 @@ jobs:
             exit 1
           fi
           echo "All actions are SHA-pinned"
-
       - name: Summary
         run: |
           echo ""

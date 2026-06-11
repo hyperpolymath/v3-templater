@@ -4,14 +4,12 @@
 variables:
   NODE_VERSION: "20"
   NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/.npm"
-
 # Cache configuration
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
     - .npm/
     - node_modules/
-
 stages:
   - install
   - lint
@@ -21,7 +19,6 @@ stages:
   - compliance
   - benchmark
   - deploy
-
 # Install dependencies
 install:
   stage: install
@@ -32,7 +29,6 @@ install:
     paths:
       - node_modules/
     expire_in: 1 hour
-
 # Lint code
 lint:
   stage: lint
@@ -42,7 +38,6 @@ lint:
     - npm run lint
     - npm run format -- --check
   allow_failure: false
-
 # Run tests with coverage
 test:
   stage: test
@@ -60,7 +55,6 @@ test:
     paths:
       - coverage/
     expire_in: 1 week
-
 # Test coverage enforcement
 coverage-check:
   stage: test
@@ -76,7 +70,6 @@ coverage-check:
         exit 1
       fi
   allow_failure: false
-
 # Build project
 build:
   stage: build
@@ -90,7 +83,6 @@ build:
     paths:
       - dist/
     expire_in: 1 week
-
 # Security audit
 security:audit:
   stage: security
@@ -99,7 +91,6 @@ security:audit:
   script:
     - npm audit --audit-level=moderate || true
   allow_failure: true
-
 # Dependency scanning
 security:dependency-scan:
   stage: security
@@ -108,7 +99,6 @@ security:dependency-scan:
   script:
     - npx audit-ci --moderate
   allow_failure: true
-
 # SAST scanning
 security:sast:
   stage: security
@@ -122,7 +112,6 @@ security:sast:
       sast: eslint-report.json
     expire_in: 1 week
   allow_failure: true
-
 # Container scanning (if Docker image exists)
 security:container:
   stage: security
@@ -135,7 +124,6 @@ security:container:
   only:
     - main
     - develop
-
 # RSR compliance check
 compliance:rsr:
   stage: compliance
@@ -151,7 +139,6 @@ compliance:rsr:
         exit 1
       fi
   allow_failure: false
-
 # License compliance
 compliance:licenses:
   stage: compliance
@@ -164,7 +151,6 @@ compliance:licenses:
     paths:
       - licenses.json
     expire_in: 1 month
-
 # SBOM generation
 compliance:sbom:
   stage: compliance
@@ -176,7 +162,6 @@ compliance:sbom:
     paths:
       - sbom.json
     expire_in: 3 months
-
 # Performance benchmarks
 benchmark:
   stage: benchmark
@@ -189,12 +174,11 @@ benchmark:
       - benchmark-results.txt
     expire_in: 1 month
   allow_failure: true
-
 # Deploy to npm (manual, main branch only)
 deploy:npm:
   stage: deploy
   image: node:${NODE_VERSION}
-  needs: [build, test, security:audit, compliance:rsr]
+  needs: [build, test, 'security:audit', 'compliance:rsr']
   script:
     - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
     - npm publish --dry-run
@@ -205,7 +189,6 @@ deploy:npm:
   environment:
     name: production
     url: https://www.npmjs.com/package/v3-templater
-
 # Deploy documentation
 deploy:docs:
   stage: deploy
@@ -215,3 +198,8 @@ deploy:docs:
   only:
     - main
   when: manual
+trufflehog:
+  stage: security
+  image: trufflesecurity/trufflehog:latest
+  script:
+    - trufflehog git file://. --only-verified --fail
